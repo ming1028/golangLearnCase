@@ -4,11 +4,14 @@ import (
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"html/template"
+	"log"
 	"net/http"
+	"time"
 )
 
 func main() {
 	engine := gin.Default()
+	engine.Use(statCost())
 	// 自定义模板函数(坑点：自定义函数必须在文件引入之前)
 	engine.SetFuncMap(template.FuncMap{
 		"safe": func(str string) template.HTML {
@@ -98,4 +101,18 @@ func main() {
 	})
 	// 启动http服务 默认8080端口
 	engine.Run()
+}
+
+// 定义中间件
+func statCost() gin.HandlerFunc {
+	return func(context *gin.Context) {
+		start := time.Now()
+		// 调用该请求的剩余处理程序
+		context.Next()
+		// 不调用该请求的剩余处理程序
+		// c.Abort()
+		// 计算耗时
+		cost := time.Since(start)
+		log.Println("耗费时间", cost.String(), cost.Nanoseconds())
+	}
 }
