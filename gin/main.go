@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -9,7 +10,10 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"os"
+	"os/signal"
 	"strings"
+	"syscall"
 	"time"
 )
 
@@ -107,7 +111,36 @@ func main() {
 	engine.GET("/auth", authHandler)
 	engine.GET("/home", JWTAuthMiddleware(), homeHandler)
 	// 启动http服务 默认8080端口
-	engine.Run()
+	//engine.Run()
+
+	srv := http.Server{
+		Addr:    ":8080",
+		Handler: engine,
+	}
+	go func() {
+		// 开启一个goroutine启动服务
+		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			log.Fatalf("listen: %s\n", err)
+		}
+	}()
+
+	// 监听信号
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
+	for sign := range quit {
+		switch sign {
+		case syscall.SIGTERM, syscall.SIGINT:
+			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+			defer cancel()
+			// 5秒内优雅关闭服务（将未处理完的请求处理完再关闭服务），超过5秒就超时退出
+			if err := srv.Shutdown(ctx); err != nil {
+				log.Fatal("Server Shutdown: ", err)
+			}
+			log.Println("Server exiting")
+		default:
+			log.Println("step 5: unknown signal", sign)
+		}
+	}
 }
 
 // 定义中间件
