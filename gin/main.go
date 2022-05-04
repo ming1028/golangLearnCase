@@ -2,10 +2,14 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
+	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt/v4"
 	"html/template"
 	"log"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -99,6 +103,9 @@ func main() {
 		_ = json.Unmarshal(jsonBytes, &m)
 		context.JSON(http.StatusOK, m)
 	})
+
+	engine.GET("/auth", authHandler)
+	engine.GET("/home", JWTAuthMiddleware(), homeHandler)
 	// 启动http服务 默认8080端口
 	engine.Run()
 }
@@ -115,4 +122,90 @@ func statCost() gin.HandlerFunc {
 		cost := time.Since(start)
 		log.Println("耗费时间", cost.String(), cost.Nanoseconds())
 	}
+}
+
+const TokenExpireDuration = time.Hour * 2
+
+var tokenSecret = []byte("jwtSecret")
+
+type MyClaims struct {
+	UserName string `json:"userName"`
+	jwt.RegisteredClaims
+}
+
+func genToken(username string) (string, error) {
+	c := MyClaims{
+		username,
+		jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(TokenExpireDuration)),
+			Issuer:    "gin-demo",
+		},
+	}
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, c)
+	return token.SignedString(tokenSecret)
+}
+
+func parseToken(tokenString string) (*MyClaims, error) {
+	token, err := jwt.ParseWithClaims(tokenString, &MyClaims{}, func(token *jwt.Token) (interface{}, error) {
+		return tokenSecret, nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	if claims, ok := token.Claims.(*MyClaims); ok && token.Valid {
+		return claims, err
+	}
+	return nil, errors.New("invalid token")
+}
+
+func authHandler(ctx *gin.Context) {
+	username := "zhangsan"
+	tokenString, err := genToken(username)
+	fmt.Println(err)
+	ctx.JSON(http.StatusOK, gin.H{
+		"code":    200,
+		"message": "success",
+		"data": gin.H{
+			"token": tokenString,
+		},
+	})
+	return
+}
+
+func JWTAuthMiddleware() func(ctx *gin.Context) {
+	return func(ctx *gin.Context) {
+		authHeader := ctx.Request.Header.Get("Authorization")
+		fmt.Println(authHeader)
+		if authHeader == "" {
+			ctx.JSON(http.StatusOK, gin.H{
+				"code": 2003,
+				"msg":  "请求头中auth为空",
+			})
+			ctx.Abort()
+			return
+		}
+		parts := strings.SplitN(authHeader, " ", 2)
+		fmt.Println(parts)
+		if !(len(parts) == 2 && parts[0] == "Bearer") {
+			ctx.JSON(http.StatusOK, gin.H{
+				"code": 2004,
+				"msg":  "请求头中auth格式有误",
+			})
+			ctx.Abort()
+			return
+		}
+		mc, _ := parseToken(parts[1])
+		fmt.Println(mc)
+		ctx.Set("username", mc.UserName)
+		ctx.Next()
+	}
+}
+
+func homeHandler(c *gin.Context) {
+	username := c.MustGet("username").(string)
+	c.JSON(http.StatusOK, gin.H{
+		"code": 2000,
+		"msg":  "success",
+		"data": gin.H{"username": username},
+	})
 }
