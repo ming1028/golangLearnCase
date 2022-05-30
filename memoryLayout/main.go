@@ -68,4 +68,9 @@ func main() {
 	 */
 	var b5 Bar5
 	fmt.Println(unsafe.Sizeof(b5))
+
+	/**
+	 *将常用字段放置在结构体的第一个位置上减少CPU要执行的指令数量，从而达到更快的访问效果。
+	 *
+	 */
 }
