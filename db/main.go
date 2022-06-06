@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/learn/db/model"
+	"github.com/golangLearnCase/db/model"
 	"time"
 )
 
