@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func main() {
-	arr1 := new([5]int)
+	arr1 := new([5]int) // new 值类型 make引用类型
 	fmt.Println(arr1)
 	editArr(arr1)
 	fmt.Println(arr1)

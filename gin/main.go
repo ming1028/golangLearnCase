@@ -26,8 +26,8 @@ func main() {
 			return template.HTML(str)
 		},
 	})
-	engine.LoadHTMLGlob("gin/templates/**/*")
-	engine.LoadHTMLFiles("gin/templates/index.tmpl")
+	engine.LoadHTMLGlob("gin/templates/**/*") // 只解析到第二层级下所有文件 /* 这一层所有的
+	// engine.LoadHTMLFiles("gin/templates/index.tmpl")
 	engine.GET("/hello", func(ctx *gin.Context) {
 		ctx.JSON(200, gin.H{
 			"message": "success",
