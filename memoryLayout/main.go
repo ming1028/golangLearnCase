@@ -45,7 +45,8 @@ type Bar5 struct {
  */
 func main() {
 	var f Foo
-	fmt.Println(unsafe.Sizeof(f))
+	var in int
+	fmt.Println(unsafe.Sizeof(f), unsafe.Sizeof(&f), unsafe.Sizeof(&in))
 
 	var b Bar
 	fmt.Println(unsafe.Sizeof(b))
