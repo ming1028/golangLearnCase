@@ -56,12 +56,13 @@ func main() {
 
 	userJson := `{"name":"张三","age":22}`
 	user4 := new(UserInfo)
-	_ = json.Unmarshal([]byte(userJson), &user4)
+	_ = json.Unmarshal([]byte(userJson), user4)
 	fmt.Printf("%v\n", user4)
 	u4Val := reflect.ValueOf(user4)
 	if u4Val.Kind() == reflect.Ptr {
 		u4Val = u4Val.Elem()
 	}
+	fmt.Println(u4Val)
 	u4Type := u4Val.Type()
 	for i := 0; i < u4Val.NumField(); i++ {
 		field := u4Type.Field(i)
