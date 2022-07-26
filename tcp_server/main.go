@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"net"
+	"strings"
 )
 
 func main() {
@@ -25,9 +26,13 @@ func main() {
 
 func process(conn net.Conn) {
 	defer conn.Close()
+	reader := bufio.NewReader(conn)
+	var (
+		buf  [1024]byte
+		recv []byte
+	)
+
 	for {
-		reader := bufio.NewReader(conn)
-		var buf [128]byte
 		n, err := reader.Read(buf[:])
 		if err != nil && err != io.EOF {
 			fmt.Println("read from client failed, err:", err)
@@ -38,7 +43,14 @@ func process(conn net.Conn) {
 			break
 		}
 		recvStr := string(buf[:n])
+		if strings.HasSuffix(recvStr, "Q") {
+			fmt.Println("客户端断开")
+			break
+		}
+		recvStr = strings.Trim(recvStr, "Q")
 		fmt.Println("收到客户端发来的数据：", recvStr)
-		conn.Write([]byte(recvStr))
+		recv = append(recv, buf[:n]...)
 	}
+	fmt.Println("总共收到客户端发来的数据：", string(recv))
+	conn.Write(recv)
 }
