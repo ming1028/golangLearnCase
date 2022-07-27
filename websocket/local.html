@@ -49,6 +49,7 @@
 
     ws.onmessage = function (e) {
         var msg = JSON.parse(e.data);
+        console.log(msg)
         var sender, user_name, name_list, change_type;
         switch (msg.type) {
             case 'system':
@@ -57,14 +58,14 @@
             case 'user':
                 sender = msg.from + ': ';
                 break;
-            case 'handshake':
+            case 'handshake': // 确认连接后，发送登录信息
                 var user_info = {'type': 'login', 'content': uname};
                 sendMsg(user_info);
                 return;
             case 'login':
             case 'logout':
                 user_name = msg.content;
-                name_list = msg.user_list;
+                name_list = msg.userList;
                 change_type = msg.type;
                 dealUser(user_name, change_type, name_list);
                 return;

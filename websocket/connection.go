@@ -33,6 +33,7 @@ func myws(w http.ResponseWriter, r *http.Request) {
 		ws:   ws,
 		data: &Data{},
 	}
+	fmt.Println(1, c)
 	h.r <- c
 	go c.writer()
 	c.reader()
@@ -48,7 +49,8 @@ func myws(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *connection) writer() {
-	for message := range c.sc {
+	for message := range c.sc { // 读取当前连接channel返回的信息
+		fmt.Println(3, string(message))
 		c.ws.WriteMessage(websocket.TextMessage, message)
 	}
 	c.ws.Close()
@@ -57,6 +59,7 @@ func (c *connection) writer() {
 func (c *connection) reader() {
 	for {
 		_, message, err := c.ws.ReadMessage()
+		fmt.Println(4, string(message))
 		if err != nil {
 			h.r <- c
 			break
@@ -68,7 +71,8 @@ func (c *connection) reader() {
 			c.data.From = c.data.User
 			user_list = append(user_list, c.data.User)
 			data_b, _ := json.Marshal(c.data)
-			h.b <- data_b
+			fmt.Println("登录用户信息：", string(data_b))
+			h.b <- data_b // 全局socket中用户信息channel 无缓存
 		case "user":
 			c.data.Type = "user"
 			data_b, _ := json.Marshal(c.data)
