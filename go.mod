@@ -11,7 +11,6 @@ require (
 	github.com/gorilla/mux v1.8.0
 	github.com/gorilla/websocket v1.5.0
 	github.com/jinzhu/gorm v1.9.16
-	github.com/jinzhu/gorm v1.9.16
 	github.com/juju/ratelimit v1.0.1
 	github.com/shirou/gopsutil v3.21.11+incompatible
 	github.com/spf13/cast v1.5.0
@@ -19,8 +18,6 @@ require (
 	go.mongodb.org/mongo-driver v1.9.1
 	go.uber.org/ratelimit v0.2.0
 	golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e
-	gorm.io/driver/mysql v1.3.4
-	gorm.io/gorm v1.23.5
 	gorm.io/driver/mysql v1.3.4
 	gorm.io/gorm v1.23.5
 )
