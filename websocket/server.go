@@ -6,6 +6,7 @@ import (
 	"net/http"
 )
 
+// go run server.go hub.go data.go connection.go
 func main() {
 	router := mux.NewRouter()
 	go h.run()
