@@ -7,7 +7,8 @@ import (
 )
 
 func main() {
-	str := "hello"
+	str := "/hello"
+	fmt.Println(str[0] == '/') // char/unit8
 	for _, u := range str {
 		fmt.Print(u, " ")
 	}

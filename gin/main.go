@@ -26,8 +26,8 @@ func main() {
 			return template.HTML(str)
 		},
 	})
-	engine.LoadHTMLGlob("gin/templates/**/*")
-	engine.LoadHTMLFiles("gin/templates/index.tmpl")
+	engine.LoadHTMLGlob("gin/templates/**/*") // 只解析到第二层级下所有文件 /* 这一层所有的
+	// engine.LoadHTMLFiles("gin/templates/index.tmpl")
 	engine.GET("/hello", func(ctx *gin.Context) {
 		ctx.JSON(200, gin.H{
 			"message": "success",
@@ -127,7 +127,7 @@ func main() {
 	// 监听信号
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
-	for sign := range quit {
+	/*for sign := range quit {
 		switch sign {
 		case syscall.SIGTERM, syscall.SIGINT:
 			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
@@ -140,7 +140,18 @@ func main() {
 		default:
 			log.Println("step 5: unknown signal", sign)
 		}
+	}*/
+	fmt.Println(<-quit)
+	log.Println("Shutdown Server ...")
+	// 创建一个5秒超时的context
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	// 5秒内优雅关闭服务（将未处理完的请求处理完再关闭服务），超过5秒就超时退出
+	if err := srv.Shutdown(ctx); err != nil {
+		log.Fatal("Server Shutdown: ", err)
 	}
+
+	log.Println("Server exiting")
 }
 
 // 定义中间件

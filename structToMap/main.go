@@ -19,6 +19,7 @@ func main() {
 		Age:  22,
 	}
 	user1Json, _ := json.Marshal(user1)
+	fmt.Println(string(user1Json))
 	var user1Map map[string]interface{}
 	_ = json.Unmarshal(user1Json, &user1Map)
 	for key, val := range user1Map {
@@ -51,5 +52,20 @@ func main() {
 	user1Map3 := structs.Map(user1)
 	for k, v := range user1Map3 {
 		fmt.Println(k, v, fmt.Sprintf("%T", v))
+	}
+
+	userJson := `{"name":"张三","age":22}`
+	user4 := new(UserInfo)
+	_ = json.Unmarshal([]byte(userJson), user4)
+	fmt.Printf("%v\n", user4)
+	u4Val := reflect.ValueOf(user4)
+	if u4Val.Kind() == reflect.Ptr {
+		u4Val = u4Val.Elem()
+	}
+	fmt.Println(u4Val)
+	u4Type := u4Val.Type()
+	for i := 0; i < u4Val.NumField(); i++ {
+		field := u4Type.Field(i)
+		fmt.Printf("%s, %T\n", field.Tag.Get("json"), u4Val.Field(i).Interface())
 	}
 }

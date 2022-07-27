@@ -32,7 +32,7 @@ func main() {
 	for _, v := range s2.Data {
 		fmt.Printf("value:%v, type:%T\n", v, v)
 	}
-	/*stu1 := new(stu)
+	stu1 := new(stu)
 	stu1.Name = "abc"
 	stu1.Age = 22
 	stu1Json, _ := json.Marshal(*stu1)
@@ -41,7 +41,7 @@ func main() {
 	map1 := make(map[string]interface{})
 	map1["count"] = 1
 	map1Json, _ := json.Marshal(map1)
-	fmt.Println(string(map1Json))*/
+	fmt.Println(string(map1Json))
 
 	s3 := s{
 		Data: make(map[string]interface{}),
@@ -62,4 +62,20 @@ func main() {
 	for _, v := range s4.Data {
 		fmt.Printf("value:%v, type:%T\n", v, v)
 	}
+
+	stu2 := stu{
+		Name: "ss",
+		Age:  222,
+	}
+
+	buffer := new(bytes.Buffer)
+	encoder := gob.NewEncoder(buffer)
+	_ = encoder.Encode(stu2)
+	stu2Bytes := buffer.Bytes()
+	fmt.Println(stu2Bytes)
+
+	stu3 := new(stu)
+	decoder := gob.NewDecoder(bytes.NewBuffer(stu2Bytes))
+	_ = decoder.Decode(stu3)
+	fmt.Println(*stu3)
 }

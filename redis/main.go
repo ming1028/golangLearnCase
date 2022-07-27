@@ -36,7 +36,9 @@ func main() {
 		fmt.Sprintf("redis get err key:name err:%v\n", val)
 		return
 	}
-	fmt.Println(val)
+	fmt.Println(val.Val(), val.Name())
+	fmt.Println(val.String())
+	fmt.Println(val.FullName())
 
 	// 获得命令对象
 	cmder := redisClient.Get(ctx, "name")
