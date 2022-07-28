@@ -23,6 +23,24 @@ func main() {
 		fmt.Println("s2 is nil")
 	}
 
+	var a int
+	var intPtr *int
+	intPtr = &a
+	*intPtr = 20
+	fmt.Println(a)
+
+	var p *string
+	fmt.Println(p)
+	fmt.Printf("p的值是%v， 内存地址%p\n", p, p)
+	if p == nil {
+		fmt.Println("p is nil")
+	}
+	p = new(string)
+	fmt.Printf("p的值是%v， 内存地址%p\n", p, p)
+	*p = "引用类型声明不会分配内存"
+	var map3 map[string]string
+	map3["引用类型声明"] = "不会分配内存"
+	fmt.Println(map3)
 }
 
 func init() {
