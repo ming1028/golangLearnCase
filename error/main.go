@@ -43,3 +43,6 @@ func Error1() error {
 	err := ErrorTemplate()
 	return err2.WithMessage(err, "调用")
 }
+
+// 错误只在逻辑的最外层处理一次，底层只返回错误。
+// 底层除了返回错误外，要对原始错误进行包装，增加错误信息、调用栈等这些有利于排查的上下文信息。
