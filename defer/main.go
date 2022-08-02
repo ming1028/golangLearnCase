@@ -2,12 +2,14 @@ package main
 
 import "fmt"
 
+// recover 当前goroutine是否有panic行为
+// defer必须在panic前面
 func main() {
-	defer func() {
+	/*defer func() {
 		if err := recover(); err != nil {
 			fmt.Println("recover:", err)
 		}
-	}()
+	}()*/
 	// test()
 	test2()
 	fmt.Println("===================")
@@ -27,12 +29,13 @@ func test2() {
 		fmt.Println("1", recover(), "1-1")
 	}()
 
-	defer fmt.Println(2, recover())
+	defer fmt.Println(2, recover()) // revocer已执行
 
 	defer func() {
+		// 函数调用栈 recover会判断是否在同一个goroutine、是否panic、函数是否退出，是否已经被修复（已修复总返回nil）
+		// 当前参数和当前goroutine的函数指针判断
 		func() {
-			fmt.Println("3")
-			recover()
+			fmt.Println("3", recover()) // ??为什么defer中的闭包不能recover
 		}()
 	}()
 	panic("test pannic")

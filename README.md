@@ -148,3 +148,13 @@ type bmap struct {
 ### 闭包
 
 闭包复制的是原对象的指针
+
+***
+
+### panic/recover问题
+
+* 当前goroutine是否panic
+* 当前函数是否已经退出
+* 当前函数是否已被recover
+* argp(调用当前recover的函数指针)和当前最上层函数调用defer的函数指针，中间必须隔着仅仅一层函数
+  调用
