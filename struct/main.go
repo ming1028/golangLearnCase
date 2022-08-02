@@ -33,5 +33,14 @@ func main() {
 	}
 	p4.walk()
 	p4.eat()
-	fmt.Printf("p1: %T, p2: %T, p3: %T, p4: %T", p1, p2, p3, p4)
+	fmt.Printf("p1: %T, p2: %T, p3: %T, p4: %T\n", p1, p2, p3, p4)
+
+	// 匿名结构体
+	var user struct {
+		Name string
+		Age  int
+	}
+	user.Name = "sss"
+	user.Age = 33
+	fmt.Printf("%#v\n", user)
 }

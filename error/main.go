@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	err2 "github.com/pkg/errors"
 	"os"
 	"time"
 )
@@ -25,4 +26,20 @@ func main() {
 
 	_, err := os.Stat("stderr")
 	fmt.Println(err)
+
+	err = Error1()
+	if err != nil {
+		fmt.Printf("original error:%T %v\n", err2.Cause(err), err2.Cause(err))
+		fmt.Printf("stack trace:\n%+v\n", err)
+	}
+}
+
+func ErrorTemplate() error {
+	err := errors.New("模拟错误")
+	return err2.Wrap(err, "template error")
+}
+
+func Error1() error {
+	err := ErrorTemplate()
+	return err2.WithMessage(err, "调用")
 }
