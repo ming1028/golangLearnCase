@@ -21,6 +21,7 @@ func main() {
 	resultChan := make(chan *Result, 128)
 	createPool(4, jobChan, resultChan)
 
+	// 打印结果
 	go func(resultChan chan *Result) {
 		for result := range resultChan {
 			fmt.Printf("gofunNUm %v job id:%v randnum:%v result:%d\n", result.goFunNum, result.job.Id,
@@ -28,6 +29,7 @@ func main() {
 		}
 	}(resultChan)
 
+	// 生产者
 	for id := 0; ; id++ {
 		rNum := rand.Int31()
 		jobChan <- &Job{
@@ -49,6 +51,7 @@ func createPool(
 			resultChan chan *Result,
 			chanNum int,
 		) {
+			// 消费
 			for job := range jobChan {
 				rNum := job.RandNum
 				var sum int32
