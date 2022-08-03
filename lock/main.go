@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"sync"
+	"sync/atomic"
 )
 
 var (
@@ -26,5 +27,10 @@ func add() {
 		x += 1
 		lock.Unlock()
 	}
+	wg.Done()
+}
+
+func atomicAdd() {
+	atomic.AddInt64(&x, 1)
 	wg.Done()
 }
