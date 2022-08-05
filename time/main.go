@@ -64,10 +64,10 @@ func main() {
 	hour, min, sec := now.UTC().Clock()
 	fmt.Println("当前时间在零时区,时分秒：", hour, min, sec)
 
-	/*fmt.Println("定时器")
+	fmt.Println("定时器")
 	ticker := time.Tick(time.Second)
 	for v := range ticker {
 		fmt.Println(v.Second())
-	}*/
+	}
 
 }
