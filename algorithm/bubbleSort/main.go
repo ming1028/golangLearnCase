@@ -16,6 +16,7 @@ func main() {
 	BubbleSort(arr)
 	fmt.Println(arr)
 	BubbleSort2(arr)
+	fmt.Println(arr)
 	fmt.Println(arr[len(arr)-1])
 }
 
