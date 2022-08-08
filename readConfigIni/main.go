@@ -26,4 +26,27 @@ func main() {
 	// 修改并保存到文件中
 	cfg.Section("").Key("app_mode").SetValue("production")
 	cfg.SaveTo("./readConfigIni/my.ini.local")
+
+	servConfig := new(ServConfig)
+	err = ini.MapTo(servConfig, "./readConfigIni/my.ini")
+	if err != nil {
+		log.Fatalf("ini mapTo struct err:%+v\n", err)
+	}
+	fmt.Println(servConfig)
+}
+
+type Server struct {
+	Protocol      string `ini:"protocol"`
+	HttpPort      int32  `ini:"http_port"`
+	EnforceDomain bool   `ini:"enforce_domain"`
+}
+
+type Paths struct {
+	Data string `ini:"data"`
+}
+
+type ServConfig struct {
+	AppMode string `ini:"app_mode"`
+	Paths   `ini:"paths"`
+	Server  `ini:"server"`
 }
