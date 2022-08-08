@@ -15,9 +15,7 @@ func HeapSort(arr []int32) []int32 {
 	for i := 0; i < length; i++ {
 		lastlen := length - i
 		HeapSortMax(arr, int32(lastlen))
-		/*if i < length {
-			arr[0], arr[lastlen-1] = arr[lastlen-1], arr[0]
-		}*/
+		arr[0], arr[lastlen-1] = arr[lastlen-1], arr[0]
 	}
 	return arr
 }
