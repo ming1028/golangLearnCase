@@ -16,7 +16,7 @@ func main() {
 	decodeBytes, _ := base64.StdEncoding.DecodeString(encodeString)
 	fmt.Printf("decode base64: %v\n", string(decodeBytes))
 
-	input = []byte("34234dfsdfsf")
+	input = []byte("342+34dfsdfsf")
 	urlEncode := base64.URLEncoding.EncodeToString(input)
 	fmt.Printf("urlencode:%v\n", urlEncode)
 
