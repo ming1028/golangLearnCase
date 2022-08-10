@@ -16,6 +16,7 @@ func main() {
 
 	w := sha1.New()
 	io.WriteString(w, str)
+	// w.Write(data)
 	bw := w.Sum(nil)
 	shaStr2 := hex.EncodeToString(bw)
 	fmt.Println(shaStr2)
