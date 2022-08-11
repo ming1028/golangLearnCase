@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
 )
 
 type Job struct {
@@ -31,10 +30,10 @@ func main() {
 
 	// 生产者
 	for id := 0; ; id++ {
-		rNum := rand.Int31()
+		// rNum := rand.Int31()
 		jobChan <- &Job{
 			Id:      int32(id),
-			RandNum: rNum,
+			RandNum: int32(id),
 		}
 	}
 }
