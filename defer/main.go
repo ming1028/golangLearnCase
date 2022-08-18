@@ -14,9 +14,14 @@ func main() {
 		}
 	}()*/
 	// test()
+	// map 不可比较
 	/*m1 := make(map[string]int)
 	m2 := make(map[string]int)
 	fmt.Println(m2 == m1)*/
+	// slice不可比较
+	/*s1 := make([]int, 0, 1)
+	s2 := make([]int, 0, 1)
+	fmt.Println(s1 == s2)*/
 	test2()
 	fmt.Println("===================")
 	test3()
