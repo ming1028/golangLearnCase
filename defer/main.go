@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 // recover 当前goroutine是否有panic行为
 // defer必须在panic前面
@@ -11,9 +14,17 @@ func main() {
 		}
 	}()*/
 	// test()
+	/*m1 := make(map[string]int)
+	m2 := make(map[string]int)
+	fmt.Println(m2 == m1)*/
 	test2()
 	fmt.Println("===================")
 	test3()
+	start := time.Now()
+	time.Sleep(3 * time.Second)
+	defer func() {
+		fmt.Println(time.Now().Sub(start))
+	}()
 }
 
 func test() {
