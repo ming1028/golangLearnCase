@@ -181,4 +181,11 @@ type bmap struct {
   - 相同类型的结构体才可以比较，与属性类型个数、和属性顺序（匿名结构体）
   - 结构体中有不可以比较的类型：map、slice
 * reflect.DeepEqual比较两个类型
-* nil可以用作interface、function、pointer、map、slice和channel的“空值”，
+* nil可以用作interface、function、pointer、map、slice和channel的“空值”
+
+### 内存四区
+
+* 栈区：空间较小，读写性能高，数据存放时间较短暂。由编译器自动分配和释放。
+* 堆区：空间充裕，数据存放时间较久
+* 全局区-静态全局变量区：全局变量的开辟是程序在main之前就已经放在内存中，对外完全可见，由操作系统回收。
+* 全局区-常量区：常量为存放数值字面值单位，不可修改，常量名是其值的对等符号，无法取出地址，因为字面量符号并没有地址而言。
