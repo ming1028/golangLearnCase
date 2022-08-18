@@ -54,6 +54,28 @@ Go 语言根据接口类型是否包含一组方法将接口类型分成了两�
     使用 runtime.iface 结构体表示包含方法的接口
     使用 runtime.eface 结构体表示不包含任何方法的 interface{} 类型；
 
+```
+type eface struct {
+  _type *_type // 类型信息
+  data unsafe.Pointer // 指向数据的指针
+}
+
+type iface struct {
+  tab *itab
+  data unsafe.Pointer
+}
+
+type itab struct {
+  inter *interfacetype // 接口自身的元信息
+  _type *_type  // 具体类型的元信息
+  link  *itab
+  bad   int32
+  hash  int32
+  fun   [1]uintptr
+}
+```
+interface是所有类型的父类，interface{}可以传入任何类型
+
 map中数据总个数/桶个数>6.5时，引发翻倍扩容
 使用了太多的溢出桶时，（溢出桶使用的太多会导致map处理速度降低）
 B <= 15，已使用的溢出桶个数 >=2的B次方时，引发等量扩容
@@ -151,7 +173,6 @@ type bmap struct {
 * map扩容后会将部分key移至新内存，并未记录原数据位置，扩容后就已经是无序的
 * map读取根据随机数来读取数据
 
-
 ### 闭包
 
 闭包复制的是原对象的指针
@@ -178,8 +199,8 @@ type bmap struct {
 * map只能和nil比较
 * slice不能比较
 * 结构体比较
-  - 相同类型的结构体才可以比较，与属性类型个数、和属性顺序（匿名结构体）
-  - 结构体中有不可以比较的类型：map、slice
+    - 相同类型的结构体才可以比较，与属性类型个数、和属性顺序（匿名结构体）
+    - 结构体中有不可以比较的类型：map、slice
 * reflect.DeepEqual比较两个类型
 * nil可以用作interface、function、pointer、map、slice和channel的“空值”
 
