@@ -15,6 +15,12 @@ func main() {
 	fmt.Println(sli1)
 	sli1 = sli1[:len(arr2)-1]
 	fmt.Println(sli1)
+	sli2 := sli1 // 同一底层数组
+	// sli2 扩充 底层数组改变
+	sli2[1] = 988
+	fmt.Println(sli1, sli2, arr2)
+	sli2 = append(sli2, []int{5, 6, 7, 8, 2, 3, 23, 23, 23, 23}...)
+	fmt.Println(sli1, sli2)
 }
 
 func editArr(arr *[5]int) {
