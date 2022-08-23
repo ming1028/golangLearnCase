@@ -17,7 +17,7 @@ func main() {
 func add(base int) func(int) int {
 	fmt.Printf("base in func (%p)\n", &base)
 	return func(i int) int {
-		fmt.Printf("base in closure (%p)\n", &base)
+		fmt.Printf("func base in closure (%p)\n", &base)
 		base += i
 		return base
 	}
