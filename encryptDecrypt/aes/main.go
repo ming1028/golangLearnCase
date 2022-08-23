@@ -19,7 +19,7 @@ func main() {
 	fmt.Println(string(bytes))
 }
 
-// PKCS7Padding 填充
+// PKCS7Padding 填充 需要填充的长度数字n重复 n填充到原数据末尾
 func PKCS7Padding(ciphertext []byte, blockSize int) []byte {
 	padding := blockSize - len(ciphertext)%blockSize // 填充的长度
 	bytePadding := byte(padding)
