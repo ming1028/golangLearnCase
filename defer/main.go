@@ -27,10 +27,8 @@ func main() {
 	fmt.Println("===================")
 	test3()
 	start := time.Now()
+	defer fmt.Println(time.Now().Sub(start))
 	time.Sleep(3 * time.Second)
-	defer func() {
-		fmt.Println(time.Now().Sub(start))
-	}()
 }
 
 func test() {
@@ -46,7 +44,7 @@ func test2() {
 		fmt.Println("1", recover(), "1-1")
 	}()
 
-	defer fmt.Println(2, recover()) // revocer已执行
+	defer fmt.Println(2, recover()) //作为形参已经执行
 
 	defer func() {
 		// 函数调用栈 recover会判断是否在同一个goroutine、是否panic、函数是否退出，是否已经被修复（已修复总返回nil）
