@@ -37,6 +37,7 @@ func main() {
 	// restful api
 	// 查询
 	engine.GET("/book", func(ctx *gin.Context) {
+		time.Sleep(5 * time.Second)
 		ctx.JSON(200, gin.H{
 			"message": "get",
 		})
@@ -126,7 +127,7 @@ func main() {
 
 	// 监听信号
 	quit := make(chan os.Signal, 1)
-	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
+	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM) // win不支持
 	/*for sign := range quit {
 		switch sign {
 		case syscall.SIGTERM, syscall.SIGINT:
