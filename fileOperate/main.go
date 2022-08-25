@@ -38,6 +38,7 @@ func main() {
 	readAll(fileName)
 	readAll2(fileName)
 	readLine(fileName)
+	readByte(fileName)
 	// 删除文件
 	_ = os.Remove("./fileOperate/create.log")
 }
@@ -150,5 +151,29 @@ func readLine(filename string) error {
 			return err
 		}
 		log.Printf("every line data is %s\n", string(lineBytes))
+	}
+}
+
+func readByte(filename string) error {
+	file, err := os.Open(filename)
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+	defer file.Close()
+	reader := bufio.NewReader(file)
+
+	// 限制每次读取数据长度
+	buf := make([]byte, 2)
+	for {
+		n, err := reader.Read(buf)
+		if err != nil {
+			fmt.Println(err)
+			return err
+		}
+		if n == 0 {
+			return nil
+		}
+		fmt.Printf("read 2 byte is %s\n", string(buf[:n]))
 	}
 }
