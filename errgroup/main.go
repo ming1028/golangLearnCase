@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"golang.org/x/sync/errgroup"
+	"io"
 	"net/http"
 )
 
@@ -22,6 +23,9 @@ func main() {
 			if err == nil {
 				fmt.Printf("获取%s成功\n", url)
 				resp.Body.Close()
+			}
+			if err == io.EOF {
+				return nil
 			}
 			return err // 返回错误
 		})
