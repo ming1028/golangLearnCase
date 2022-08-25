@@ -106,6 +106,7 @@ func main() {
 		jsonBytes, _ := context.GetRawData()
 		var m map[string]interface{}
 		_ = json.Unmarshal(jsonBytes, &m)
+		// context.ShouldBindJSON()
 		context.JSON(http.StatusOK, m)
 	})
 
