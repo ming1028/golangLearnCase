@@ -84,7 +84,7 @@ func main() {
 	defer src.Close()
 
 	// 以写创建的模式打开文件
-	dst, err := os.OpenFile(dstFile, os.O_CREATE|os.O_CREATE, 0644)
+	dst, err := os.OpenFile(dstFile, os.O_CREATE, 0644)
 	if err != nil {
 		fmt.Errorf("openFile failed：%v", err)
 		return
