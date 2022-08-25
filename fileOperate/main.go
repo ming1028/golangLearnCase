@@ -11,8 +11,9 @@ import (
 )
 
 func main() {
+	fileName := "./fileOperate/create.log"
 	// 创建文件
-	file, _ := os.Create("./fileOperate/create.log")
+	file, _ := os.OpenFile(fileName, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0666)
 	defer file.Close()
 
 	// 获取文件信息
@@ -22,18 +23,27 @@ func main() {
 
 	// 改变文件权限
 	_ = file.Chmod(0777)
-
+	// WIN 返回-1
+	fmt.Println(os.Getuid(), os.Getgid(), os.Getenv("GOPATH"))
 	// 改变拥有者
 	_ = file.Chown(os.Getuid(), os.Getgid())
 	fileInfo, _ = file.Stat()
 	fmt.Printf("Permissions is %s\n", fileInfo.Mode())
 
+	writeAll(fileName)
+	writeLine(fileName)
+	writeLine2(fileName)
+	writeAt(fileName)
+
+	readAll(fileName)
+	readAll2(fileName)
+	readLine(fileName)
 	// 删除文件
 	_ = os.Remove("./fileOperate/create.log")
 }
 
 func writeAll(filename string) error {
-	err := os.WriteFile(filename, []byte("hello world"), 0666)
+	err := os.WriteFile(filename, []byte("hello world\n"), 0666)
 	if err != nil {
 		return err
 	}
@@ -135,6 +145,10 @@ func readLine(filename string) error {
 		if err == io.EOF {
 			return nil
 		}
-		log.Printf("every line data is %s\n", lineBytes)
+		if err != nil {
+			log.Println(err)
+			return err
+		}
+		log.Printf("every line data is %s\n", string(lineBytes))
 	}
 }
