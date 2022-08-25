@@ -14,8 +14,7 @@ func main() {
 		married bool
 	)*/
 	// 从标准输入扫描文本，读取由空白符分隔的值
-	/*fmt.Scan(&name, &age, &married) // 强制类型转换
-	 */
+	// fmt.Scan(&name, &age, &married) // 强制类型转换
 	// fmt.Scanf("1:%s 2:%d 3:%t", &name, &age, &married)
 	// fmt.Scanln(&name, &age, &married)
 	// fmt.Printf("扫描结果 name:%s age:%d married:%t \n", name, age, married)
