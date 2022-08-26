@@ -218,3 +218,4 @@ type bmap struct {
 * go tool cover -html=c.out 
 * go test -bench=Split(基准测试函数名) -benchmem(获得内存分配的统计数据：123B/op每次操作分配123字节， 3 allocs/op每次操作3次内存分配)
 * -benchtime=20(最小基准时间)
+* go tool pprof 文件
