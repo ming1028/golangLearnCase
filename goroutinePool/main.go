@@ -17,7 +17,7 @@ func myFunc(i interface{}) {
 }
 
 func demoFunc() {
-	time.Sleep(10 * time.Millisecond)
+	time.Sleep(time.Second)
 	fmt.Println("hello world")
 }
 
