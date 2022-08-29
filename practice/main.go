@@ -7,7 +7,7 @@ type Student struct {
 }
 
 func main() {
-	kv := map[string]Student{"m": {Age: 22}}
+	kv := map[string]Student{"m": {Age: 22}} // 存的值修改结构体属性，需要内存操作，map是线程不安全的
 	// kv["m"].Age = 21 map无法取址
 	s := []Student{{Age: 21}}
 	s[0].Age = 22

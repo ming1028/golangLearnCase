@@ -25,7 +25,7 @@ func main() {
 	js := `{
 		"name":"11"
 	}`
-	var p People
+	var p People // 属性小写
 	_ = json.Unmarshal([]byte(js), &p)
 	fmt.Println(p)
 	fmt.Println(&People{name: "11"} == &People{name: "11"})
@@ -35,7 +35,7 @@ func main() {
 	str2[1] = "new"
 	fmt.Println(str1)
 	fmt.Printf("%p  %p\n", &str1, &str2)
-	str2 = append(str2, "x", "y", "z")
+	str2 = append(str2, "x", "y", "z") // 扩容后底层数组发生变化
 	fmt.Printf("%p  %p\n", &str1, &str2)
 	fmt.Println(str1)
 }
