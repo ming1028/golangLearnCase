@@ -13,7 +13,7 @@ type Foo struct {
 }
 
 type Bar struct {
-	x int32 // 4
+	x int32 // 4字节 一字节8位
 	y *Foo  // 8??
 	z bool  // 1
 }
@@ -41,11 +41,12 @@ type Bar5 struct {
 }
 
 /**
- *如果结构或数组类型不包含大小大于零的字段（或元素），则其大小为0。两个不同的0大小变量在内存中可能有相同的地址。
+ *如果结构体或数组类型不包含大小大于零的字段（或元素），则其大小为0。两个不同的0大小变量在内存中可能有相同的地址。
  */
 func main() {
 	var f Foo
 	var in int
+	// uintptr 指针占用8字节
 	fmt.Println(unsafe.Sizeof(f), unsafe.Sizeof(&f), unsafe.Sizeof(&in))
 
 	var b Bar
