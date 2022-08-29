@@ -12,11 +12,10 @@ import (
 
 func main() {
 	resp, err := http.Get("http://www.baidu.com")
-	fmt.Println(resp, err)
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
-	fmt.Println(string(body), err)
+	fmt.Println(len(string(body)), err)
 
 	// 带参数get请求
 	paramData := url.Values{}
@@ -25,14 +24,13 @@ func main() {
 	urlStruct, err := url.ParseRequestURI("http://www.baidu.com")
 	fmt.Println(err)
 	urlStruct.RawQuery = paramData.Encode()
-	fmt.Println(urlStruct.String())
+	fmt.Println(urlStruct, urlStruct.String())
 
 	resp, err = http.Get(urlStruct.String())
-	fmt.Println(resp, err)
 	defer resp.Body.Close()
 
 	body, err = ioutil.ReadAll(resp.Body)
-	fmt.Println(string(body), err)
+	fmt.Println(len(string(body)), err)
 
 	// post-json
 	url := "http://www.baidu.com"
@@ -46,5 +44,5 @@ func main() {
 	defer resp.Body.Close()
 
 	b, err := ioutil.ReadAll(resp.Body)
-	fmt.Println(string(b), err)
+	fmt.Println(len(string(b)), err)
 }
