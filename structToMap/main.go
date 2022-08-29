@@ -12,6 +12,11 @@ type UserInfo struct {
 	Age  int32  `json:"age"`
 }
 
+type TypeName struct {
+	Name string
+	Age  int
+}
+
 func main() {
 	// 方式1  json序列化 数字类型默认转成float64
 	user1 := &UserInfo{
@@ -67,5 +72,22 @@ func main() {
 	for i := 0; i < u4Val.NumField(); i++ {
 		field := u4Type.Field(i)
 		fmt.Printf("%s, %T\n", field.Tag.Get("json"), u4Val.Field(i).Interface())
+	}
+
+	type demoTest struct {
+		Add string
+		TypeName
+	}
+	dt := demoTest{
+		"234234",
+		TypeName{
+			Name: "adf",
+			Age:  12,
+		},
+	}
+	fmt.Println("================")
+	user1Map4 := structs.Map(&dt)
+	for k, v := range user1Map4 {
+		fmt.Println(k, v, fmt.Sprintf("%T", v))
 	}
 }
