@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"github.com/fatih/structs"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"time"
@@ -39,8 +40,13 @@ func main() {
 	// 查询
 	var u = new(UserInfo22)
 	db.First(u)
+	fmt.Println("=============")
 	fmt.Printf("%#v\n", u)
-
+	user1Map4 := structs.Map(u)
+	for k, v := range user1Map4 {
+		fmt.Println(k, v, fmt.Sprintf("%T", v))
+	}
+	fmt.Println("=============")
 	var uu UserInfo22
 	db.Find(&uu, "hobby=?", "足球")
 	fmt.Printf("%#v\n", uu)
