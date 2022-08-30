@@ -29,10 +29,8 @@ func main() {
 		log.Fatalf("ioutil ReadAll err:%#v\n", err)
 	}
 
-	rege := regexp.MustCompile(`(\d+)@qq.com`) // 传入正则表达式，得到正则表达式的struct
-	res := rege.FindAllStringSubmatch(string(pageBytes), -1)
-	fmt.Println(res)
-	return
+	rege := regexp.MustCompile(`(\d+)@qq.com`)               // 传入正则表达式，得到正则表达式的struct
+	res := rege.FindAllStringSubmatch(string(pageBytes), -1) // n 匹配数量
 	for _, qq := range res {
 		fmt.Println(qq)
 		fmt.Println("email:", qq[0])
