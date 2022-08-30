@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/go-redis/redis/v8"
+	"github.com/spf13/cast"
 	"time"
 )
 
@@ -67,6 +68,11 @@ func main() {
 		return
 	}
 	fmt.Println(vals)
+
+	for i := 0; i < 100; i++ {
+		err = redisClient.Set(ctx, "name_"+cast.ToString(i), "张三", 0).Err()
+		fmt.Println(err)
+	}
 
 	nameVal, err := redisClient.Get(ctx, "names").Result()
 	if err != nil {
