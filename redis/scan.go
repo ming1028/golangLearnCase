@@ -35,7 +35,7 @@ func main() {
 			keys []string
 			err  error
 		)
-		keys, cursor, err = redisClient.Scan(ctx, cursor, "*", 0).Result()
+		keys, cursor, err = redisClient.Scan(ctx, cursor, "*", 2).Result()
 		if err != nil {
 			fmt.Sprintf("scan err:%v\n", err)
 			return
@@ -50,12 +50,12 @@ func main() {
 	}
 
 	// 简化模式
-	iter := redisClient.Scan(ctx, 0, "*", 0).Iterator()
+	/*iter := redisClient.Scan(ctx, 0, "*", 0).Iterator()
 	for iter.Next(ctx) {
 		fmt.Println("keys: ", iter.Val())
 	}
 	if err := iter.Err(); err != nil {
 		fmt.Sprintf("iterator next err:%v\n", err)
 		return
-	}
+	}*/
 }
