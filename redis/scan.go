@@ -19,14 +19,14 @@ func main() {
 	})
 
 	// 获得所有的key
-	keys, err := redisClient.Keys(ctx, "*").Result()
+	/*keys, err := redisClient.Keys(ctx, "*").Result()
 	if err != nil {
 		fmt.Sprintf("keys err:%v\n", err)
 		return
 	}
 	for _, key := range keys {
 		fmt.Println(key)
-	}
+	}*/
 
 	// scan
 	var cursor uint64
@@ -40,10 +40,10 @@ func main() {
 			fmt.Sprintf("scan err:%v\n", err)
 			return
 		}
-		for _, key := range keys {
+		/*for _, key := range keys {
 			fmt.Println(key)
-		}
-		fmt.Println("cursor", cursor)
+		}*/
+		fmt.Println("长度", len(keys), "cursor", cursor)
 		if cursor == 0 {
 			break
 		}
