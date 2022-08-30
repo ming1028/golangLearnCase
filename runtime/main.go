@@ -16,7 +16,7 @@ func main() {
 
 	for i := 0; i < 2; i++ {
 		fmt.Println("hello")
-		runtime.Gosched()
+		runtime.Gosched() // 让出cpu允许其他goroutine执行
 	}
 	runtime.GOMAXPROCS(2)
 	go a()
