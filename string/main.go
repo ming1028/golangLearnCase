@@ -25,6 +25,7 @@ func main() {
 	fmt.Println(string(strSli))
 	fmt.Println("字节数：", len(str), "字符数：", utf8.RuneCountInString(str))
 
+	fmt.Println(utf8.RuneCountInString("中国hello"))
 	// 字符串连接
 	b := bytes.NewBufferString(str)
 	b.WriteString(" ")
