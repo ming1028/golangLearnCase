@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
 	var sli1 []int
@@ -20,4 +22,18 @@ func main() {
 	sli4 := make([]int, 6)
 	n = copy(sli4, sli3)
 	fmt.Println(n, sli4, sli3)
+
+	sli := make([]int, 3, 5)
+	sli[0] = 1
+	sli[1] = 2
+	change(sli...)
+	fmt.Println(sli)
+	sli2 = sli[0:2]
+	change(sli2...)
+	fmt.Println(sli)
+}
+
+func change(s ...int) {
+	fmt.Println("函数内：", len(s), cap(s))
+	s = append(s, 3)
 }
