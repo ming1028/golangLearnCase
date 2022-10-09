@@ -74,6 +74,7 @@ type itab struct {
   fun   [1]uintptr
 }
 ```
+
 interface是所有类型的父类，interface{}可以传入任何类型
 
 map中数据总个数/桶个数>6.5时，引发翻倍扩容
@@ -83,6 +84,9 @@ B > 15，已使用的溢出桶个数 >=2的15次方时，引发等量扩容
 
 make 初始化内置的数据结构，切片、map、channel
 new 根据传入的类型分配一片空间并返回这片内存空间的指针
+
+type 类型名 类型 创建新类型
+type 类型别名 类型 类型别名
 
 ### 变量
 
@@ -197,12 +201,15 @@ type bmap struct {
 ### 类型比较
 
 * map只能和nil比较
-* slice不能比较
+* slice、函数不能比较
 * 结构体比较
     - 相同类型的结构体才可以比较，与属性类型个数、和属性顺序（匿名结构体）
     - 结构体中有不可以比较的类型：map、slice
 * reflect.DeepEqual比较两个类型
-* nil可以用作interface、function、pointer、map、slice和channel的“空值”
+* **nil可以用作interface、function、pointer、map、slice和channel的“空值”**
+* 结构体比较：所。有成员都可以比较，比较时逐个项比较
+    - 只能比较是否相等，不能比较大小
+    - 相同结构体：属性类型、属性顺序相关
 
 ### 内存四区
 
@@ -215,7 +222,8 @@ type bmap struct {
 
 * go test -cover(测试覆盖率) -coverprofile=c.out(输出到文件) -v(查看测试函数名称时间)
   -run="名称"(正则匹配)
-* go tool cover -html=c.out 
-* go test -bench=Split(基准测试函数名) -benchmem(获得内存分配的统计数据：123B/op每次操作分配123字节， 3 allocs/op每次操作3次内存分配)
+* go tool cover -html=c.out
+* go test -bench=Split(基准测试函数名) -benchmem(获得内存分配的统计数据：123B/op每次操作分配123字节， 3
+  allocs/op每次操作3次内存分配)
 * -benchtime=20(最小基准时间)
 * go tool pprof 文件
