@@ -31,4 +31,7 @@ func main() {
 	b.WriteString(" ")
 	b.WriteString(" world")
 	fmt.Println(b.String())
+
+	i := 65
+	fmt.Println(string(i))
 }
