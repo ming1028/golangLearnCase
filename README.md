@@ -244,6 +244,7 @@ var m map[类型]类型 只是声明没有分配内存空间
 * iota 在 const 关键字出现时将被重置为0，const中每新增一行常量声明将使 iota 计数一次。
 * 当且仅当动态值和动态类型都为 nil 时，**接口类型**值才为 nil
 * map的value本身不可寻址，struct分配值需要寻址
+
 ```
 使用临时变量
 map[string]struct
@@ -251,3 +252,6 @@ tmp.val = value
 map[string] = tmp
 或者map中的value存的是结构体地址
 ```
+
+* 切片不能比较
+* 使用:=定义的变量，如果该变量会在当前作用域覆盖之前的变量
