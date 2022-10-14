@@ -29,6 +29,9 @@ func main() {
 	start := time.Now()
 	defer fmt.Println(time.Now().Sub(start))
 	time.Sleep(3 * time.Second)
+
+	fmt.Println("========")
+	fmt.Println(f(3))
 }
 
 func test() {
@@ -66,4 +69,19 @@ func test3() {
 		panic("defer panic")
 	}()
 	panic("test panic")
+}
+
+func f(n int) (r int) {
+	defer func() {
+		r += n
+		recover()
+	}()
+
+	var f func() // 声明未定义
+	defer f()
+
+	f = func() {
+		r += 2
+	}
+	return n + 1
 }
