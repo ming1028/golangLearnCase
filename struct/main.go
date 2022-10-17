@@ -43,4 +43,18 @@ func main() {
 	user.Name = "sss"
 	user.Age = 33
 	fmt.Printf("%#v\n", user)
+	var fra Fragment = new(GetPodAction)
+	var fra2 Fragment = &GetPodAction{}
+	var fra3 Fragment = GetPodAction{}
+	fmt.Println(fra3, fra2, fra)
+}
+
+type Fragment interface {
+	Exec(transInfo *person) error
+}
+type GetPodAction struct {
+}
+
+func (g GetPodAction) Exec(transInfo *person) error {
+	return nil
 }
