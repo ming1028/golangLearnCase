@@ -35,4 +35,10 @@ func main() {
 	*①runtime.iface 包含方法的的接口
 	*②runtime.eface 不包含任何方法的空接口
 	 */
+
+	x := interface{}(nil)
+	fmt.Printf("%#v\n", x)
+	fmt.Println(reflect.TypeOf(x))
+	ss, ok := x.(interface{})
+	fmt.Println(ok, ss)
 }
