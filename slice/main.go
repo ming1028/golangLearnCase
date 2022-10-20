@@ -31,6 +31,10 @@ func main() {
 	sli2 = sli[0:2]
 	change(sli2...)
 	fmt.Println(sli)
+	x := make([]int, 2, 10)
+	_ = x[6:10]
+	_ = x[6:]
+	_ = x[2:]
 }
 
 func change(s ...int) {
