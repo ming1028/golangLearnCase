@@ -5,7 +5,7 @@ import (
 )
 
 func main() {
-	arr := []int32{1, 9, 10, 30, 2, 5, 45, 8, 63, 234, 12}
+	arr := []int32{1, 9, 10, 30, 2, 5, 45, 8, 63, 234}
 	fmt.Println(arr)
 	fmt.Println(HeapSort(arr))
 }
@@ -15,7 +15,8 @@ func HeapSort(arr []int32) []int32 {
 	for i := 0; i < length; i++ {
 		lastlen := length - i
 		HeapSortMax(arr, int32(lastlen))
-		arr[0], arr[lastlen-1] = arr[lastlen-1], arr[0]
+		// arr[0], arr[lastlen-1] = arr[lastlen-1], arr[0] // 倒序
+		fmt.Println("交换：", arr)
 	}
 	return arr
 }
@@ -43,5 +44,5 @@ func HeapSortMax(arr []int32, length int32) {
 			fmt.Println(2, arr)
 		}
 	}
-	fmt.Println(3, arr)
+	fmt.Println("heap Sort end:", arr)
 }
