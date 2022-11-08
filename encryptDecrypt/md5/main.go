@@ -11,11 +11,13 @@ func main() {
 	data := []byte(str)
 	has := md5.Sum(data)
 	md5Str1 := fmt.Sprintf("%x", has) // 转换成16进制
+	// fmt.Sprintf("%x", md5.Sum([]byte("")))
 	fmt.Println(md5Str1)
 
 	w := md5.New()
 	//io.WriteString(w, str) // 将str写入到w中 方式1
-	w.Write(data)    // 方式2
+	w.Write(data)
+	// 方式2
 	bw := w.Sum(nil) // 是否增加特定前缀
 	fmt.Println(bw)
 	md5str2 := hex.EncodeToString(bw)

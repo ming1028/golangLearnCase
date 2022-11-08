@@ -13,4 +13,7 @@ func main() {
 	hmac := hmac2.New(md5.New, []byte(key))
 	hmac.Write([]byte(data))
 	fmt.Println(hex.EncodeToString(hmac.Sum([]byte(""))))
+	/*hmac2.New(md5.New, []byte(key))
+	hmac.Write([]byte(data))
+	hex.EncodeToString(hmac.Sum([]byte("")))*/
 }

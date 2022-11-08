@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	str := "123"
+	str := "BWvOF1WtUcsnnl+wM5lO6A=="
 	input := []byte(str)
 	fmt.Printf("[]byte : %v\n", input)
 

@@ -24,7 +24,7 @@ func main() {
 }
 
 func generatePwd(userPwd string) ([]byte, error) {
-	return bcrypt.GenerateFromPassword([]byte(userPwd), bcrypt.DefaultCost) // cost 时间花费 防止通过时间诸位破解密码
+	return bcrypt.GenerateFromPassword([]byte(userPwd), 4) // cost 时间花费 防止通过时间诸位破解密码
 }
 
 func validatePwd(userPwd string, hashed string) (isOk bool, err error) {

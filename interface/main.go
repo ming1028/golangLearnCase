@@ -38,7 +38,7 @@ func main() {
 
 	x := interface{}(nil)
 	fmt.Printf("%#v\n", x)
-	fmt.Println(reflect.TypeOf(x))
+	fmt.Println(reflect.TypeOf(x), x == nil)
 	ss, ok := x.(interface{})
 	fmt.Println(ok, ss)
 }
