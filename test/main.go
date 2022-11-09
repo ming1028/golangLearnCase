@@ -12,7 +12,7 @@ func main() {
 	map2 := make(map[string]string, 10)
 	fmt.Println(len(map2), len(map1))
 
-	fmt.Println(5.0 / 3.0)
+	fmt.Printf("%f, %T\n", 5.0/3.0, 5.0/3.0)
 
 	var s1 []int
 	if s1 == nil {
