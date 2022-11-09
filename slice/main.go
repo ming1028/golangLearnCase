@@ -5,12 +5,12 @@ import (
 )
 
 func main() {
-	var sli1 []int
+	var sli1 []int // nil slice 可以append
 	fmt.Println(sli1, sli1 == nil, &sli1)
 	fmt.Printf("nil切片地址：%p\n", &sli1)
 	sli1 = append(sli1, 1)
 	fmt.Println(sli1)
-	sli2 := make([]int, 0)
+	sli2 := make([]int, 0) // 内存已分配
 	fmt.Printf("空切片内存地址：%p\n", &sli2)
 	fmt.Println(sli2, sli2 == nil)
 
@@ -30,10 +30,10 @@ func main() {
 	fmt.Println(sli)
 	sli2 = sli[0:2]
 	change(sli2...)
-	fmt.Println(sli)
+	fmt.Println(sli2, sli)
 	x := make([]int, 2, 10)
 	_ = x[6:10]
-	_ = x[6:]
+	// _ = x[6:]
 	_ = x[2:]
 }
 

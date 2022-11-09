@@ -74,7 +74,7 @@ func main() {
 		fmt.Println(err)
 	}
 
-	nameVal, err := redisClient.Get(ctx, "names").Result()
+	nameVal, err := redisClient.Get(ctx, "name").Result()
 	if err != nil {
 		if errors.Is(err, redis.Nil) {
 			fmt.Println("defaultVal", err)

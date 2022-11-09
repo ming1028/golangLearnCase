@@ -6,14 +6,14 @@ import (
 )
 
 func main() {
-	tmp := make([]int, 5, 5)
+	tmp := make([]int, 2, 5)
 	tmp[0] = 1
 	tmp[1] = 2
 	fmt.Printf("%v %d %d %p\n", tmp, len(tmp), cap(tmp), tmp)
 	change(tmp)
 	fmt.Printf("调用函数后：%v %d %d %p\n", tmp, len(tmp), cap(tmp), tmp)
 
-	p := unsafe.Pointer(&tmp[2])
+	p := unsafe.Pointer(&tmp[1])
 	q := uintptr(p) + 8
 	t := (*int)(unsafe.Pointer(q))
 	fmt.Println(*t)
