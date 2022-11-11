@@ -38,10 +38,11 @@ func myws(w http.ResponseWriter, r *http.Request) {
 	go c.writer()
 	c.reader()
 	defer func() {
+		fmt.Println("断开退出")
 		c.data.Type = "logout"
 		user_list = del(user_list, c.data.User)
 		c.data.UserList = user_list
-		c.data.Content = c.data.User
+		c.data.Content = "退出" + c.data.User
 		data_b, _ := json.Marshal(c.data)
 		h.b <- data_b
 		h.r <- c
@@ -59,8 +60,10 @@ func (c *connection) writer() {
 func (c *connection) reader() {
 	for {
 		_, message, err := c.ws.ReadMessage()
-		fmt.Println(4, string(message))
+		fmt.Println(4, string(message), err)
 		if err != nil {
+			c.data.Content = "链接断开退出"
+			fmt.Println("异常退出")
 			h.r <- c
 			break
 		}
