@@ -24,7 +24,7 @@ var wu = &websocket.Upgrader{
 }
 
 func myws(w http.ResponseWriter, r *http.Request) {
-	ws, err := wu.Upgrade(w, r, nil)
+	ws, err := wu.Upgrade(w, r, nil) // connect连接对象
 	if err != nil {
 		return
 	}

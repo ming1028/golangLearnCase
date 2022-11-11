@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"golang.org/x/sync/errgroup"
 	"reflect"
 )
 
@@ -52,6 +53,24 @@ func main() {
 		}
 	}
 	fmt.Print(ts)
+
+	eg := new(errgroup.Group)
+	chNum := make(chan int, 1)
+	eg.Go(func() error {
+		var err error
+		for i := 1; i <= 10; i++ {
+			chNum <- i
+		}
+		close(chNum)
+		return err
+	})
+
+	for v := range chNum {
+		fmt.Println(v)
+	}
+
+	errs := eg.Wait()
+	fmt.Println(errs)
 }
 
 type T struct {
