@@ -1,9 +1,16 @@
 package main
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+)
 
 type person struct {
 	name string
+}
+
+type person3 struct {
+	Name string
 }
 
 func (p person) walk() {
@@ -25,6 +32,11 @@ func main() {
 	p3 := person{
 		name: "sss",
 	}
+	p3NoTag := person3{
+		Name: "noJsonTag",
+	}
+	p3Json, _ := json.Marshal(p3NoTag)
+	fmt.Println("没有tagJson:", string(p3Json))
 	p3.walk()
 	p3.eat()
 
