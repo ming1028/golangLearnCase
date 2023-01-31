@@ -7,10 +7,10 @@ import (
 )
 
 func main() {
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second*3)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*2)
 	defer cancel()
 
-	go handle(ctx, 50*time.Millisecond)
+	go handle(ctx, 3*time.Second)
 	select {
 	case <-ctx.Done():
 		fmt.Println("main:", ctx.Err())

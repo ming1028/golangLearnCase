@@ -3,7 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/go-sql-driver/mysql" // 注册驱动
 	"github.com/golangLearnCase/db/model"
 	"time"
 )
@@ -13,6 +13,10 @@ var db *sql.DB
 func main() {
 	dsn := "root:root@tcp(127.0.0.1)/sql_test"
 	db, err := sql.Open("mysql", dsn)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 	defer db.Close()
 	db.SetMaxOpenConns(20)
 	db.SetConnMaxIdleTime(20)

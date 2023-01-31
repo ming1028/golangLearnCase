@@ -15,7 +15,7 @@ func HeapSort(arr []int32) []int32 {
 	for i := 0; i < length; i++ {
 		lastlen := length - i
 		HeapSortMax(arr, int32(lastlen))
-		// arr[0], arr[lastlen-1] = arr[lastlen-1], arr[0] // 倒序
+		arr[0], arr[lastlen-1] = arr[lastlen-1], arr[0] // 倒序
 		fmt.Println("交换：", arr)
 	}
 	return arr

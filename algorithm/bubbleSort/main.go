@@ -15,6 +15,11 @@ func main() {
 	fmt.Println(arr)
 	BubbleSort(arr)
 	fmt.Println(arr)
+	arr = nil
+	rand.Seed(time.Now().Unix())
+	for i := 0; i < 20; i++ {
+		arr = append(arr, rand.Int31n(100))
+	}
 	BubbleSort2(arr)
 	fmt.Println(arr)
 	fmt.Println(arr[len(arr)-1])
@@ -30,6 +35,7 @@ func BubbleSort(arr []int32) {
 	}
 }
 
+// 最大数
 func BubbleSort2(arr []int32) {
 	for i := 0; i < len(arr)-1; i++ {
 		if arr[i] > arr[i+1] {
