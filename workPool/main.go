@@ -30,14 +30,14 @@ func main() {
 	}(resultChan)
 
 	// 生产者
-	for id := 0; id < 20; id++ {
+	for id := 0; id < 20000; id++ {
 		// rNum := rand.Int31()
 		jobChan <- &Job{
 			Id:      int32(id),
 			RandNum: int32(id),
 		}
+		time.Sleep(time.Second * 50)
 	}
-	time.Sleep(time.Second * 10)
 }
 
 func createPool(

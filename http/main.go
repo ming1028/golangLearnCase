@@ -8,9 +8,23 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
+	"time"
 )
 
 func main() {
+	t := time.Now().Format("01-02 15:04:05")
+	fmt.Println(t)
+	u := "http://www.baidu.com?a=1&b=2"
+	us, err := url.Parse(u)
+	if err != nil {
+		return
+	}
+	fmt.Println(us)
+	queryValues, _ := url.ParseQuery(us.RawQuery)
+	fmt.Println(queryValues)
+	queryValues.Add("sendId", "23")
+	us.RawQuery = queryValues.Encode()
+	fmt.Println(us.String())
 	resp, err := http.Get("http://www.baidu.com")
 	defer resp.Body.Close()
 
