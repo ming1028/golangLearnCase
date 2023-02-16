@@ -318,3 +318,11 @@ type User2 = User 类型别名
     - 操作引擎，返回结果
 * redolog只有innodb有，并且是循环写，不持久保存，binlog追加写
 * 5.6版本之后引入索引下推优化，可以在索引遍历的过程中，对索引中包含的字段先做判断，直接过滤掉不满足条件的记录，减少回表次数。
+* ALTER TABLE table_name NOWAIT ... / ALTER TABLE table_name WAIT N ...
+* MVCC 数据 库必须可能保留一个对象的几个不同的提交版本，因为各种正在进行的事务可能需要看到数
+  据库在不同的时间点的状态
+
+### Go杂记
+
+* 根据 internal 机制的定义，一个 Go 项目里的 internal 目录下的 Go 包，只可以被本项目内部的包导入。
+  项目外部是无法导入这个 internal 目录下面的包的。可以说，internal 目录的引入，让一个 Go 项目中 Go 包的分类与用途变得更加清晰。

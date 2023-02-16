@@ -3,9 +3,12 @@ package main
 import (
 	"encoding/base64"
 	"fmt"
+	"github.com/spf13/cast"
 )
 
 func main() {
+	d := 32
+	fmt.Println(base64.StdEncoding.EncodeToString([]byte(cast.ToString(d))))
 	str := "BWvOF1WtUcsnnl+wM5lO6A=="
 	input := []byte(str)
 	fmt.Printf("[]byte : %v\n", input)
