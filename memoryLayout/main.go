@@ -6,6 +6,9 @@ import (
 )
 
 // Foo 结构体是占用一块连续的内存，一个结构体变量的大小是由结构体中的字段决定
+// 1、起始的存储地址 必须是 内存对齐边界 的倍数。
+//
+//	2、整体占用字节数 必须是 内存对齐边界 的倍数。
 type Foo struct {
 	A int8
 	B int8
@@ -40,10 +43,18 @@ type Bar5 struct {
 	m struct{}
 }
 
+type Bar6 struct {
+	n bool  // 1
+	m int32 // 4
+	d byte  // 1
+}
+
 /**
  *如果结构体或数组类型不包含大小大于零的字段（或元素），则其大小为0。两个不同的0大小变量在内存中可能有相同的地址。
  */
 func main() {
+	var b6 Bar6
+	fmt.Println(unsafe.Sizeof(b6), unsafe.Alignof(b6.n), unsafe.Alignof(b6.m), unsafe.Alignof(b6.d))
 	var f Foo
 	var in int
 	// uintptr 指针占用8字节
