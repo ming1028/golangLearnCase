@@ -61,7 +61,7 @@ func EnPwdCode(pwd []byte) (string, error) {
 	return base64.StdEncoding.EncodeToString(result), err
 }
 
-//解密
+// 解密
 func DePwdCode(pwd string) ([]byte, error) {
 	//解密base64字符串
 	pwdByte, err := base64.StdEncoding.DecodeString(pwd)
@@ -73,7 +73,7 @@ func DePwdCode(pwd string) ([]byte, error) {
 
 }
 
-//实现解密
+// 实现解密
 func AesDeCrypt(cypted []byte, key []byte) ([]byte, error) {
 	//创建加密算法实例
 	block, err := aes.NewCipher(key)
@@ -83,7 +83,7 @@ func AesDeCrypt(cypted []byte, key []byte) ([]byte, error) {
 	//获取块大小
 	blockSize := block.BlockSize()
 	//创建加密客户端实例
-	blockMode := cipher.NewCBCDecrypter(block, key[:blockSize])
+	blockMode := cipher.NewCBCDecrypter(block, key[:blockSize]) // 使用密钥作为偏移量
 	origData := make([]byte, len(cypted))
 	//这个函数也可以用来解密
 	blockMode.CryptBlocks(origData, cypted)
