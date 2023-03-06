@@ -216,7 +216,7 @@ var m map[类型]类型 只是声明没有分配内存空间
     - 结构体中有不可以比较的类型：map、slice
 * reflect.DeepEqual比较两个类型
 * **nil可以用作interface、function、pointer、map、slice和channel的“空值”**
-* 结构体比较：所。有成员都可以比较，比较时逐个项比较
+* 结构体比较：所有成员都可以比较，比较时逐个项比较
     - 只能比较是否相等，不能比较大小
     - 相同结构体：属性类型、属性顺序相关
 * 字符串类型不能赋值nil，也不能跟nil相比
@@ -319,11 +319,14 @@ type User2 = User 类型别名
 * redolog只有innodb有，并且是循环写，不持久保存，binlog追加写
 * 5.6版本之后引入索引下推优化，可以在索引遍历的过程中，对索引中包含的字段先做判断，直接过滤掉不满足条件的记录，减少回表次数。
 * ALTER TABLE table_name NOWAIT ... / ALTER TABLE table_name WAIT N ...
-* MVCC 数据 库必须可能保留一个对象的几个不同的提交版本，因为各种正在进行的事务可能需要看到数
+* MVCC 数据库必须可能保留一个对象的几个不同的提交版本，因为各种正在进行的事务可能需要看到数
   据库在不同的时间点的状态
 * begin/start transaction 命令并不是一个事务的起点，在执行到它们之后的第一个操作 InnoDB 表的语句，事务才真正启动。
   如果你想要马上启动一个事务，可以使用 start transaction with consistent snapshot 这个命令。
 * 索引统计不准确 analyze table t来重新统计
+* delete只是把记录的位置，或者数据页标记为“可复用”，但是磁盘文件的大小不会变。数据页空洞：alter table A engine=InnoDB 命令来重建表。
+  使用临时表转存数据、交换表名、删除旧表的操作。
+* Truncate table 可以理解为drop+create
 
 ### Go杂记
 
