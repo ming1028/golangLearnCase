@@ -78,7 +78,7 @@ func f(n int) (r int) {
 	}()
 
 	var f func() // 声明未定义
-	defer f()
+	defer f()    // panic
 
 	f = func() {
 		r += 2
