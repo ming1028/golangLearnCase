@@ -29,8 +29,8 @@ type Bar2 struct {
 
 type Bar3 struct {
 	x int32 // 4
-	z bool  // 1
 	y Foo   // 3
+	z bool  // 1
 }
 
 type Bar4 struct {
@@ -54,33 +54,33 @@ type Bar6 struct {
  */
 func main() {
 	var b6 Bar6
-	fmt.Println(unsafe.Sizeof(b6), unsafe.Alignof(b6.n), unsafe.Alignof(b6.m), unsafe.Alignof(b6.d))
+	fmt.Println("Bar6", unsafe.Sizeof(b6), unsafe.Alignof(b6.n), unsafe.Alignof(b6.m), unsafe.Alignof(b6.d))
 	var f Foo
 	var in int
 	// uintptr 指针占用8字节
-	fmt.Println(unsafe.Sizeof(f), unsafe.Sizeof(&f), unsafe.Sizeof(&in))
+	fmt.Println("Foo", unsafe.Sizeof(f), unsafe.Sizeof(&f), unsafe.Sizeof(&in))
 
 	var b Bar
-	fmt.Println(unsafe.Sizeof(b))
+	fmt.Println("Bar", unsafe.Sizeof(b))
 
 	var b2 Bar2
-	fmt.Println(unsafe.Sizeof(b2))
+	fmt.Println("Bar2", unsafe.Sizeof(b2))
 
 	var b3 Bar3
-	fmt.Println(unsafe.Sizeof(b3))
+	fmt.Println("Bar3", unsafe.Sizeof(b3))
 
 	/**
 	 *由于空结构体struct{}的大小为 0，所以当一个结构体中包含空结构体类型的字段时，通常不需要进行内存对齐
 	 */
 	var b4 Bar4
-	fmt.Println(unsafe.Sizeof(b4))
+	fmt.Println("Bar4", unsafe.Sizeof(b4))
 
 	/**
 	 *当空结构体类型作为结构体的最后一个字段时，如果有指向该字段的指针，
 	 *那么就会返回该结构体之外的地址。为了避免内存泄露会额外进行一次内存对齐。
 	 */
 	var b5 Bar5
-	fmt.Println(unsafe.Sizeof(b5))
+	fmt.Println("Bar5", unsafe.Sizeof(b5))
 
 	/**
 	 *将常用字段放置在结构体的第一个位置上减少CPU要执行的指令数量，从而达到更快的访问效果。
