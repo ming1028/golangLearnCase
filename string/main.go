@@ -33,7 +33,7 @@ func main() {
 	fmt.Println(b.String())
 
 	i := 65
-	fmt.Println(string(i))
+	fmt.Println(string(rune(i)))
 
 	buffStr := bytes.NewBufferString("New")
 	buffStr.WriteString("Buffer")
