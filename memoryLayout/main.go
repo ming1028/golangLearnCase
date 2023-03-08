@@ -44,9 +44,9 @@ type Bar5 struct {
 }
 
 type Bar6 struct {
-	n bool  // 1
-	m int32 // 4
-	d byte  // 1
+	n bool   // 1
+	m int32  // 4
+	d string // 8
 }
 
 /**
