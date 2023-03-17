@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"net/http"
+	_ "net/http/pprof"
 	"time"
 )
 
@@ -17,6 +19,11 @@ type Result struct {
 }
 
 func main() {
+	nowDate := time.Now()
+	time.Sleep(time.Second * 2)
+	//endDate := time.Now()
+	fmt.Println("耗时：", time.Since(nowDate))
+	time.Sleep(time.Hour)
 	jobChan := make(chan *Job, 128)
 	resultChan := make(chan *Result, 128)
 	createPool(4, jobChan, resultChan)
@@ -29,15 +36,19 @@ func main() {
 		}
 	}(resultChan)
 
-	// 生产者
+	go func() {
+		fmt.Println(http.ListenAndServe("0.0.0.0:10000", nil))
+	}()
+
 	for id := 0; id < 20000; id++ {
 		// rNum := rand.Int31()
 		jobChan <- &Job{
 			Id:      int32(id),
 			RandNum: int32(id),
 		}
-		time.Sleep(time.Second * 50)
+		time.Sleep(time.Second)
 	}
+	// 生产者
 }
 
 func createPool(

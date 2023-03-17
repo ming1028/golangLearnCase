@@ -41,4 +41,5 @@ func Init(proNum int) {
 		jobChan <- i
 		time.Sleep(time.Microsecond * 500)
 	}
+	close(jobChan)
 }
