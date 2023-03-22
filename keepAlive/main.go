@@ -7,6 +7,7 @@ import (
 	"github.com/spf13/cast"
 	"io/ioutil"
 	"net/http"
+	"sync"
 	"time"
 )
 
@@ -16,33 +17,42 @@ var str = `{"wx_send_req":{"template_id":"UZPRKusPeOoJ9oQ0LJC5_xqifKpSOkNKv2SAnk
 var openId1 = "oOLpN59oaX9Wni72l_YDazmqy0tE"
 var openId2 = ""
 var url = "http://localhost:8080"
+var chReq chan *http.Request
+var httpRequest *http.Request
+var hreqOnce sync.Once
 
 func main() {
 	client := http.Client{}
 	// apiUrl := fmt.Sprintf(template_send_url, accToken)
-	req, _ := http.NewRequest("POST", url, nil)
-	req.Header.Set("Content-Type", "application/json")
-	for i := 1; i < 3; i++ {
-		wxReq := new(ServiceSendReq)
-		_ = json.Unmarshal([]byte(str), wxReq)
-		wxReq.WxSendReq.Touser = openId1
-		tmp := new(TempMsgData)
-		tmp.Value = cast.ToString(i)
-		tmp.Color = "#173177"
-		wxReq.WxSendReq.Data["first"] = *tmp
-		js, _ := json.Marshal(wxReq.WxSendReq)
-		body := bytes.NewBuffer(js)
-		req.Body = ioutil.NopCloser(body)
-		req.ContentLength = int64(len(js))
-		resp, err := client.Do(req)
-		if err != nil {
-			continue
-		}
-		b, err := ioutil.ReadAll(resp.Body)
-		resp.Body.Close()
-		fmt.Println(string(b), err)
-		time.Sleep(time.Second * 3)
+	for i := 1; i < 13; i++ {
+		j := i
+		go func(i int) {
+			s := time.Now()
+			req := GetRequest()
+			wxReq := new(ServiceSendReq)
+			_ = json.Unmarshal([]byte(str), wxReq)
+			wxReq.WxSendReq.Touser = openId1
+			tmp := new(TempMsgData)
+			tmp.Value = cast.ToString(i)
+			tmp.Color = "#173177"
+			wxReq.WxSendReq.Data["first"] = *tmp
+			js, _ := json.Marshal(wxReq.WxSendReq)
+			body := bytes.NewBuffer(js)
+			req.Body = ioutil.NopCloser(body)
+			req.ContentLength = int64(len(js))
+			resp, err := client.Do(req)
+			if err != nil {
+				fmt.Println(err)
+			}
+			b, err := ioutil.ReadAll(resp.Body)
+			resp.Body.Close()
+			d := time.Since(s)
+			fmt.Println(d, string(b), err)
+			PushRequest(req)
+		}(j)
 	}
+
+	time.Sleep(time.Hour)
 }
 
 type WxSendReq struct {
@@ -59,4 +69,28 @@ type TempMsgData struct {
 
 type ServiceSendReq struct {
 	WxSendReq WxSendReq `json:"wx_send_req"`
+}
+
+func init() {
+	chReq = make(chan *http.Request, 2)
+	for i := 0; i < 2; i++ {
+		req, err := http.NewRequest("POST", url, nil)
+		req.Header.Set("Content-Type", "application/json")
+		if err != nil {
+			fmt.Println("newRequestError", err)
+			return
+		}
+		chReq <- req
+	}
+}
+
+func GetRequest() *http.Request {
+	select {
+	case req := <-chReq:
+		return req
+	}
+}
+
+func PushRequest(req *http.Request) {
+	chReq <- req
 }
