@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/spf13/cast"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"sync"
 	"time"
@@ -38,13 +38,13 @@ func main() {
 			wxReq.WxSendReq.Data["first"] = *tmp
 			js, _ := json.Marshal(wxReq.WxSendReq)
 			body := bytes.NewBuffer(js)
-			req.Body = ioutil.NopCloser(body)
+			req.Body = io.NopCloser(body)
 			req.ContentLength = int64(len(js))
 			resp, err := client.Do(req)
 			if err != nil {
 				fmt.Println(err)
 			}
-			b, err := ioutil.ReadAll(resp.Body)
+			b, err := io.ReadAll(resp.Body)
 			resp.Body.Close()
 			d := time.Since(s)
 			fmt.Println(d, string(b), err)
