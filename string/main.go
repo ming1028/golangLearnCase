@@ -39,4 +39,8 @@ func main() {
 	buffStr.WriteString("Buffer")
 	buffStr.WriteString("String")
 	fmt.Println(buffStr.String())
+
+	str1 := "中国abc,嗯嗯嗯嗯"
+	str1Rune := []rune(str1)
+	fmt.Println(string(str1Rune[:6]))
 }
