@@ -23,7 +23,7 @@ func main() {
 	var b bytes.Buffer
 	n := name{
 		Age:      12,
-		Nickname: "王八蛋,",
+		Nickname: "",
 	}
 	err = tpl.Execute(&b, n.Nickname)
 	fmt.Println(err)

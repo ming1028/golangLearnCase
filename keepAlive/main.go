@@ -22,6 +22,32 @@ var httpRequest *http.Request
 var hreqOnce sync.Once
 
 func main() {
+	/*wx := &ServiceSendReq{
+		WxSendReq: WxSendReq{
+			TemplateId: "sdfs",
+			Touser:     "",
+			Url:        "",
+			Data: map[string]TempMsgData{
+				"key": {
+					Value: "1",
+					Color: "#123123",
+				},
+			},
+		},
+		ExtraInfo: ExtraInfo{
+			AppId:        1,
+			TemplateId:   2,
+			SendId:       0,
+			TagId:        []uint64{3},
+			AgentId:      1,
+			CorpId:       "",
+			InterKeyName: "remark",
+			IsInter:      true,
+		},
+	}
+	wxJ, _ := json.Marshal(wx)
+	fmt.Println(string(wxJ))
+	return*/
 	client := http.Client{}
 	// apiUrl := fmt.Sprintf(template_send_url, accToken)
 	for i := 1; i < 13; i++ {
@@ -69,6 +95,18 @@ type TempMsgData struct {
 
 type ServiceSendReq struct {
 	WxSendReq WxSendReq `json:"wx_send_req"`
+	ExtraInfo ExtraInfo `json:"extra_info"`
+}
+
+type ExtraInfo struct {
+	AppId        uint64   `json:"app_id"`
+	TemplateId   uint64   `json:"template_id"`
+	SendId       uint64   `json:"send_id"` // 消息批次id
+	TagId        []uint64 `json:"tag_id"`
+	AgentId      uint64   `json:"agent_id"`
+	CorpId       string   `json:"corp_id"`
+	InterKeyName string   `json:"inter_key_name"`
+	IsInter      bool     `json:"is_inter"` // 是否截取
 }
 
 func init() {
