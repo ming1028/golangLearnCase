@@ -16,7 +16,7 @@ var accToken = "66_tc4P5004CZTXC-Lqx1oguxmaBvCoKrE60XBzBRAoC8wpG3_Gzd9yMcbuJj9TI
 var str = `{"wx_send_req":{"template_id":"UZPRKusPeOoJ9oQ0LJC5_xqifKpSOkNKv2SAnkP1l8I","url":"http://m.qihuo18.com/smp/article/stock?appid=wxa6d9a782033a426f&type=MjUx&tid=MTk%3D&aid=MzA%3D","data":{"first":{"value":"2342","color":"#173177"},"remark":{"value":"234","color":"#173177"},"keyword1":{"value":"234","color":"#173177"},"keyword2":{"value":"234","color":"#173177"},"keyword3":{"value":"2","color":"#173177"},"keyword4":{"value":"2","color":"#173177"},"keyword5":{"value":"2","color":"#173177"}}},"extra_info":{"app_id":4,"template_id":19,"tag_id":[7],"corp_id":"wwc5c5dbbc5c2ccf25","agent_id":1000033}}`
 var openId1 = "oOLpN59oaX9Wni72l_YDazmqy0tE"
 var openId2 = ""
-var url = "http://localhost:8080"
+var url = "http://10.68.30.129:8080"
 var chReq chan *http.Request
 var httpRequest *http.Request
 var hreqOnce sync.Once

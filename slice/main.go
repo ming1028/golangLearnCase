@@ -15,9 +15,9 @@ func main() {
 	fmt.Println(sli2, sli2 == nil)
 
 	sli1 = []int{1, 2, 3, 4, 5, 6}
-	sli2 = make([]int, 12)
+	sli2 = []int{11, 21, 31, 41, 51, 6, 7, 8}
 	n := copy(sli1, sli2) // sli2 => sli1
-	fmt.Println(n, sli2, sli1)
+	fmt.Println("23333", n, sli2, sli1)
 	sli3 := []int{1, 2, 3, 4, 5, 6, 7, 8}
 	sli4 := make([]int, 6)
 	n = copy(sli4, sli3)

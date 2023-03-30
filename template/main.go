@@ -7,7 +7,7 @@ import (
 	"math"
 )
 
-var str = `abc,lsdkls,{{.}}`
+var str = `abc,lsdkls`
 
 type name struct {
 	Nickname string
@@ -16,9 +16,7 @@ type name struct {
 
 func main() {
 	fmt.Println(math.Ceil(1 / 50))
-	tpl, err := template.New("tmpl").
-		Delims("{{", "}}").
-		Parse(str)
+	tpl, err := template.New("tmpl").Parse(str)
 	fmt.Println(err)
 	var b bytes.Buffer
 	n := name{

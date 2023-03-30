@@ -25,4 +25,8 @@ func main() {
 
 	urlDecode, _ := base64.URLEncoding.DecodeString(urlEncode)
 	fmt.Printf("urldecode:%v\n", string(urlDecode))
+
+	str = "MTcy"
+	s, _ := base64.StdEncoding.DecodeString(str)
+	fmt.Println(string(s))
 }

@@ -6,18 +6,27 @@ import (
 )
 
 func main() {
-	chan1 := make(chan int, 1)
-	stop2(chan1)
-	for j := 1; j < 3; j++ {
-		jc := make(chan int, 1)
-		chanPool(jc, j)
-		for i := j * 10; i < (j+1)*10; i++ {
-			jc <- i
-		}
-		close(jc)
-		time.Sleep(time.Second * 5)
+	for i := 0; i < 9; i++ {
+		Retry(func() {
+			defer fmt.Println(1)
+		})
 	}
 
+	chan1 := make(chan int, 1)
+	stop2(chan1)
+	go func() {
+		for j := 1; j < 3; j++ {
+			jc := make(chan int, 1)
+			chanPool(jc, j)
+			for i := j * 10; i < (j+1)*10; i++ {
+				jc <- i
+			}
+			close(jc)
+			//time.Sleep(time.Second * 5)
+		}
+	}()
+
+	time.Sleep(time.Minute)
 }
 
 // 只能输出
@@ -39,4 +48,8 @@ func chanPool(jobChan chan int, num int) {
 			fmt.Println("关闭", n, "协程", m)
 		}(num, i)
 	}
+}
+
+func Retry(f func()) {
+	f()
 }
