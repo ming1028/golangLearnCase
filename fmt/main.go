@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -27,4 +28,6 @@ func main() {
 	}
 	text = strings.TrimSpace(text)
 	fmt.Printf("%#v\n", text)
+
+	fmt.Println(fmt.Sprintf("%03s", strconv.Itoa(22)))
 }
