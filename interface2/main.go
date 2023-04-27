@@ -2,6 +2,10 @@ package main
 
 import "fmt"
 
+type ints interface {
+	Say()
+}
+
 type People interface {
 	Speak(string) string
 }
@@ -22,4 +26,8 @@ func main() {
 	var peo People = &Student{} // 指针接受者实现了People接口，是People类型
 	think := "bitch"
 	fmt.Println(peo.Speak(think))
+}
+
+func (stu *Student) say() {
+	fmt.Println(123)
 }
