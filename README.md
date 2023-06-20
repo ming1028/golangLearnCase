@@ -324,7 +324,8 @@ type User2 = User 类型别名
 * begin/start transaction 命令并不是一个事务的起点，在执行到它们之后的第一个操作 InnoDB 表的语句，事务才真正启动。
   如果你想要马上启动一个事务，可以使用 start transaction with consistent snapshot 这个命令。
 * 索引统计不准确 analyze table t来重新统计
-* delete只是把记录的位置，或者数据页标记为“可复用”，但是磁盘文件的大小不会变。数据页空洞：alter table A engine=InnoDB 命令来重建表。
+* delete只是把记录的位置，或者数据页标记为“可复用”，但是磁盘文件的大小不会变。数据页空洞：alter table A engine=InnoDB
+  命令来重建表。
   使用临时表转存数据、交换表名、删除旧表的操作。
 * Truncate table 可以理解为drop+create
 
@@ -332,3 +333,4 @@ type User2 = User 类型别名
 
 * 根据 internal 机制的定义，一个 Go 项目里的 internal 目录下的 Go 包，只可以被本项目内部的包导入。
   项目外部是无法导入这个 internal 目录下面的包的。可以说，internal 目录的引入，让一个 Go 项目中 Go 包的分类与用途变得更加清晰。
+* 多个 defer 注册，按 FILO 次序执行 ( 先进后出 )。哪怕函数或某个延迟调用发生错误，这些调用依旧会被执行。
