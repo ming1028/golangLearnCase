@@ -11,7 +11,20 @@ import (
 	"time"
 )
 
+type WechatResp struct {
+	Errcode  int32  `json:"errcode"`
+	Errmsg   string `json:"errmsg"`
+	Msgid    int64  `json:"msgid"`
+	RespInfo string `json:"resp_info"`
+}
+
 func main() {
+	wechatResp := &WechatResp{}
+	sj := `{"errcode":43101,"errmsg":"user refuse to accept the msg rid: 649a34ad-71d15d93-47ff8411"}`
+	err := json.Unmarshal([]byte(sj), wechatResp)
+	if err != nil {
+
+	}
 	t := time.Now().Format("01-02 15:04:05")
 	fmt.Println(t)
 	u := "http://www.baidu.com?a=1&b=2"
@@ -59,4 +72,21 @@ func main() {
 
 	b, err := ioutil.ReadAll(resp.Body)
 	fmt.Println(len(string(b)), err)
+
+	http.HandleFunc("/go", myHandler)
+	http.ListenAndServe("127.0.0.1:8000", nil)
+
+}
+
+// handler函数
+func myHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println(r.RemoteAddr, "连接成功")
+	// 请求方式：GET POST DELETE PUT UPDATE
+	fmt.Println("method:", r.Method)
+	// /go
+	fmt.Println("url:", r.URL.Path)
+	fmt.Println("header:", r.Header)
+	fmt.Println("body:", r.Body)
+	// 回复
+	w.Write([]byte("www.5lmh.com"))
 }

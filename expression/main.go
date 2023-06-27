@@ -1,6 +1,9 @@
 package main
 
 import (
+	"bufio"
+	"bytes"
+	"encoding/binary"
 	"encoding/json"
 	"fmt"
 )
@@ -45,6 +48,14 @@ func main() {
 	fmt.Println(sss)
 	ssb, _ := json.Marshal(sss)
 	fmt.Println(ssb)
+
+	pkg := new(bytes.Buffer)
+	binary.Write(pkg, binary.LittleEndian, 4)
+	reader := &bufio.Reader{}
+	p, _ := reader.Peek(4)
+	lb := bytes.NewBuffer(p)
+	var length int32
+	binary.Read(lb, binary.LittleEndian, &length)
 }
 
 type T struct {
