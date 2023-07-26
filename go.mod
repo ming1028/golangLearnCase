@@ -24,7 +24,7 @@ require (
 	go.mongodb.org/mongo-driver v1.11.2
 	go.uber.org/ratelimit v0.2.0
 	golang.org/x/crypto v0.7.0
-	golang.org/x/sync v0.1.0
+	golang.org/x/sync v0.3.0
 	gopkg.in/ini.v1 v1.67.0
 	gorm.io/driver/mysql v1.4.7
 	gorm.io/gorm v1.24.6
