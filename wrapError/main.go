@@ -6,8 +6,13 @@ import (
 )
 
 func main() {
+	type stackTracer interface {
+		StackTrace() errors.StackTrace
+	}
 	err := err1()
 	e := errors.Cause(err)
+	er, _ := e.(stackTracer)
+	fmt.Printf("%+v", er.StackTrace())
 	fmt.Println(e.Error())
 	fmt.Printf("%T %v\n", e, e)
 }
