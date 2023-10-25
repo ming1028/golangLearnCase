@@ -8,6 +8,7 @@ import (
 )
 
 func main() {
+	rand.Seed(time.Now().Unix())
 	for i := 0; i < 1000; i++ {
 		fmt.Println(rand.Int63n(8) + 3)
 	}
