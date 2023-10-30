@@ -90,3 +90,9 @@ func myHandler(w http.ResponseWriter, r *http.Request) {
 	// 回复
 	w.Write([]byte("www.5lmh.com"))
 }
+
+func Middleward(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
+		next.ServeHTTP(writer, request)
+	})
+}
