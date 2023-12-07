@@ -87,6 +87,21 @@ func main() {
 
 	db.Unscoped().First(u2)
 	fmt.Println(u2)
+
+	var u3 UserInfo22
+	db.Unscoped().FirstOrInit(&u3, UserInfo22{
+		Name: "a",
+	})
+	fmt.Println(u3)
+
+	var u4 UserInfo22
+	db.Unscoped().Where(UserInfo22{
+		Name: "c",
+	}).Attrs(UserInfo22{Address: "ddd"}).FirstOrCreate(&u4)
+	fmt.Println(u4)
+
+	db.Unscoped().Where("name = ?", db.Table("users_goose").Select("MAX(name)").SubQuery()).First(u4)
+	fmt.Println(u4)
 }
 
 func afterQueryCallBack(scope *gorm.Scope) {
