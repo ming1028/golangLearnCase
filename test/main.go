@@ -3,6 +3,9 @@ package main
 import "fmt"
 
 func main() {
+	m := 1
+	m <<= 1 // 向左位移赋值  >> 向右位移
+	fmt.Println("位移", m)
 	sli := []int{1, 2, 3, 4}
 	fmt.Println(cap(sli), len(sli))
 	map1 := map[string]string{
