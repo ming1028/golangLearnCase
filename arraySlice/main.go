@@ -21,6 +21,8 @@ func main() {
 	fmt.Println(sli1, sli2, arr2)
 	sli2 = append(sli2, []int{5, 6, 7, 8, 2, 3, 23, 23, 23, 23}...)
 	fmt.Println(sli1, sli2)
+
+	fmt.Printf("%+d", -2)
 }
 
 func editArr(arr *[5]int) {
