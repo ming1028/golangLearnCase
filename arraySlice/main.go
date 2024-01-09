@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"github.com/elliotchance/testify-stats/assert"
+	"testing"
+)
 
 const (
 	name = 2
@@ -29,6 +33,9 @@ func main() {
 
 	fmt.Printf("%+d\n", -2)
 	fmt.Println(name, name2)
+
+	// assert equal
+	fmt.Println("slice比较", assert.Equal(&testing.T{}, sli1, sli2, "比较"))
 }
 
 func editArr(arr *[5]int) {
