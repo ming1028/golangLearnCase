@@ -4,6 +4,7 @@ import (
 	"encoding/csv"
 	"encoding/json"
 	"github.com/go-resty/resty/v2"
+	"net/http"
 	"os"
 )
 
@@ -14,6 +15,10 @@ var (
 
 func main() {
 	client := resty.New()
+	client.SetTransport(&http.Transport{
+		DisableKeepAlives: false,
+		MaxConnsPerHost:   5,
+	})
 	resp, _ := client.R().SetHeaders(map[string]string{
 		"Origin":        "http://quote.youruitech.com",
 		"Content-Type":  "application/json",

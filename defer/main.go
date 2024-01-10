@@ -13,8 +13,8 @@ func main() {
 		if err := recover(); err != nil {
 			fmt.Println("recover:", err)
 		}
-	}()*/
-	// test()
+	}()
+	test()*/
 	// map 不可比较
 	/*m1 := make(map[string]int)
 	m2 := make(map[string]int)
@@ -47,7 +47,7 @@ func test2() {
 		fmt.Println("1", recover(), "1-1")
 	}()
 
-	defer fmt.Println(2, recover()) //作为形参已经执行
+	defer fmt.Println(2, recover()) // 作为形参已经执行
 
 	defer func() {
 		// 函数调用栈 recover会判断是否在同一个goroutine、是否panic、函数是否退出，是否已经被修复（已修复总返回nil）
@@ -74,11 +74,11 @@ func test3() {
 func f(n int) (r int) {
 	defer func() {
 		r += n
-		recover()
+		fmt.Println(recover())
 	}()
 
 	var f func() // 声明未定义
-	defer f()    // panic
+	defer f()    // return 之后执行 f() panic 声明定义需要在defer引用之前
 
 	f = func() {
 		r += 2
