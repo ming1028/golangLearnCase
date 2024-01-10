@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"time"
 )
 
@@ -11,6 +12,7 @@ var (
 )
 
 func main() {
+	defer recovery()
 	retry(func() int {
 		fmt.Println("1111")
 		time.Sleep(time.Second * 2)
@@ -34,5 +36,12 @@ func retry(f func() int) {
 			return
 		}
 		idx++
+	}
+}
+
+func recovery() {
+	log.Println("recover")
+	if err := recover(); err != nil {
+		log.Println("[Recovery from panic]", "Error", err)
 	}
 }

@@ -10,8 +10,11 @@ import (
 )
 
 func main() {
+	// 设置最大协程数量
 	poolWithMaxGoroutine()
+	// 获得返回值
 	poolWithResult()
+	// 流式
 	poolStream()
 }
 
