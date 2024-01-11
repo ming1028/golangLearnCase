@@ -34,7 +34,7 @@ func PKCS7UnPadding(origData []byte) ([]byte, error) {
 		return nil, errors.New("加密字符串错误")
 	}
 	fmt.Println("UnPadding", string(origData), origData[length:])
-	unpadding := int(origData[length-1]) //末尾填充内容，填充规则：(末尾填充3 个 3) 获取填充内容就可以得到填充长度
+	unpadding := int(origData[length-1]) // 末尾填充内容，填充规则：(末尾填充3 个 3) 获取填充内容就可以得到填充长度
 	return origData[:(length - unpadding)], nil
 }
 
@@ -63,32 +63,32 @@ func EnPwdCode(pwd []byte) (string, error) {
 
 // 解密
 func DePwdCode(pwd string) ([]byte, error) {
-	//解密base64字符串
+	// 解密base64字符串
 	pwdByte, err := base64.StdEncoding.DecodeString(pwd)
 	if err != nil {
 		return nil, err
 	}
-	//执行AES解密
+	// 执行AES解密
 	return AesDeCrypt(pwdByte, PwdKey)
 
 }
 
 // 实现解密
 func AesDeCrypt(cypted []byte, key []byte) ([]byte, error) {
-	//创建加密算法实例
+	// 创建加密算法实例
 	block, err := aes.NewCipher(key)
 	if err != nil {
 		return nil, err
 	}
-	//获取块大小
+	// 获取块大小
 	blockSize := block.BlockSize()
-	//创建加密客户端实例
+	// 创建加密客户端实例
 	blockMode := cipher.NewCBCDecrypter(block, key[:blockSize]) // 使用密钥作为偏移量
 	origData := make([]byte, len(cypted))
-	//这个函数也可以用来解密
+	// 这个函数也可以用来解密
 	blockMode.CryptBlocks(origData, cypted)
 	fmt.Println(string(origData))
-	//去除填充字符串
+	// 去除填充字符串
 	origData, err = PKCS7UnPadding(origData)
 	if err != nil {
 		return nil, err
