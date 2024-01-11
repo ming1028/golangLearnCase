@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"github.com/spf13/cast"
 	"io"
-	"io/ioutil"
 	"os"
 )
 
@@ -36,7 +35,8 @@ func main() {
 	fmt.Println(cast.ToFloat32("你好"))
 
 	// 读取整个文件
-	content, err := ioutil.ReadFile("./file/main.go")
+	// content, err := ioutil.ReadFile("./file/main.go")
+	content, err := os.ReadFile("./file/main.go")
 	if err != nil {
 		_ = fmt.Errorf("readfile failed :%s", err)
 		return
@@ -66,7 +66,7 @@ func main() {
 	}
 	writer.Flush()
 
-	err = ioutil.WriteFile("./ioutil_write.log", []byte("ioutil write file\n"), 0666)
+	err = os.WriteFile("./ioutil_write.log", []byte("ioutil write file\n"), 0666)
 	if err != nil {
 		_ = fmt.Errorf("ioutil write file error: %s", err)
 		return
