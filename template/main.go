@@ -7,7 +7,8 @@ import (
 	"math"
 )
 
-var str = `abc,lsdkls`
+// .整个对象  .field 结构体具体值，渲染时要传结构题
+var str = "{{.}}"
 
 type name struct {
 	Nickname string
@@ -21,7 +22,7 @@ func main() {
 	var b bytes.Buffer
 	n := name{
 		Age:      12,
-		Nickname: "",
+		Nickname: "333",
 	}
 	err = tpl.Execute(&b, n.Nickname)
 	fmt.Println(err)
