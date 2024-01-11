@@ -113,7 +113,7 @@ func main() {
 	engine.GET("/auth", authHandler)
 	engine.GET("/home", JWTAuthMiddleware(), homeHandler)
 	// 启动http服务 默认8080端口
-	//engine.Run()
+	// engine.Run()
 
 	srv := http.Server{
 		Addr:    ":8080",
@@ -170,7 +170,7 @@ func statCost() gin.HandlerFunc {
 	}
 }
 
-const TokenExpireDuration = time.Hour * 2
+const TokenExpireDuration = time.Second * 5
 
 var tokenSecret = []byte("jwtSecret")
 
@@ -240,7 +240,15 @@ func JWTAuthMiddleware() func(ctx *gin.Context) {
 			ctx.Abort()
 			return
 		}
-		mc, _ := parseToken(parts[1])
+		mc, err := parseToken(parts[1])
+		if err != nil {
+			ctx.JSON(http.StatusOK, gin.H{
+				"code": 2005,
+				"msg":  err.Error(),
+			})
+			ctx.Abort()
+			return
+		}
 		fmt.Println(mc)
 		ctx.Set("username", mc.UserName)
 		ctx.Next()
