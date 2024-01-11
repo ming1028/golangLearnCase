@@ -30,7 +30,7 @@ func main() {
 	origData := make([]byte, len(srcData))
 	blockMode.CryptBlocks(origData, srcData)
 	padding := int(origData[len(origData)-1])
-	orignData := origData[:(len(origData) - padding)]
+	orignData := origData[:(len(origData) - padding)] // 根据填充值，获得填充的长度，截取原数据
 	fmt.Println(orignData)
 
 	// 加密
