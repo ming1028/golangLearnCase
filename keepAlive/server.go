@@ -11,9 +11,9 @@ func main() {
 		Addr:    ":8080",
 		Handler: http.HandlerFunc(Index),
 	}
-	// 使用http.NewServeMux 多路复用器 Handle 或者HandleFunc  赋值给server.Handler
+	// 如果server的Handler为nil,将使用DefaultServeMux(全局变量)作为handler
 	http.HandleFunc("/index", Index)
-	// 如果server的Handler为nil,将使用DefaultServeMux作为handler
+	// 方式2:使用http.NewServeMux 多路复用器中的Handle或者HandleFunc定义各种路由，赋值给server.Handler
 	server.ListenAndServe()
 }
 
