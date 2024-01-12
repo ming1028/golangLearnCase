@@ -78,12 +78,16 @@ func main() {
 
 	// http.ServerMux
 	serverMux := http.NewServeMux()
+	// 处理器函数
 	serverMux.HandleFunc("/", nil)
 	serverMux.HandleFunc("/h", nil)
 	serverMux.HandleFunc("/h/web", nil)
 	// 如果注册的url不是以 “/” 结尾，只能精准匹配请求的URL
 	// 如果以 “/”结尾，，如果找不到相匹配的，则向请求路径上个层级匹配，
 	// 例如：“/h/”,匹配不到/h或者/h/web,因为不是以/结尾，需要精准匹配，所以匹配到“/”
+
+	// 注册处理器
+	serverMux.Handle("/handler", TestHandler{})
 }
 
 // handler函数
@@ -103,4 +107,12 @@ func Middleward(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
 		next.ServeHTTP(writer, request)
 	})
+}
+
+// 处理器
+type TestHandler struct {
+}
+
+func (th TestHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+
 }
