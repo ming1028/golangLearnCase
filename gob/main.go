@@ -48,6 +48,7 @@ func main() {
 	}
 	s3.Data["cnt"] = 5
 	buf := new(bytes.Buffer)
+	// 将压缩的数据调用Write方法写入到bytes.Buffer
 	enc := gob.NewEncoder(buf)
 	_ = enc.Encode(s3.Data)
 	s3Json := buf.Bytes()
