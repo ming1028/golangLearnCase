@@ -351,3 +351,39 @@ type User2 = User 类型别名
     - 最大并发数限制，使用32个整数的32位来表示同意fd
     - 每次调用select,都需要把fd集合从用户态拷贝到内核态，开销大
     - 性能衰减严重，每次kernal都需要线性扫描整个fd_set，随着fd数量增长，I/O性能线性下降
+
+
+### go实用操作库
+
+* ```
+  slice操作库
+  github.com/elliotchance/pie/pie
+  ```
+* ```
+  类型转换
+  github.com/spf13/cast
+  ```
+* ```
+  协程
+  golang.org/x/sync/errgroup
+  ```
+* ```
+  协程池
+  github.com/panjf2000/ants
+  ```
+* ```
+  socket处理
+  github.com/panjf2000/gnet
+  ```
+* ```
+  第三方调用
+  github.com/go-resty/resty
+  ```
+* ```
+  jwt token生成
+  github.com/golang-jwt/jwt
+  ```
+* ```
+  协程池操作
+  github.com/sourcegraph/conc
+  ```
