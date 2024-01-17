@@ -338,6 +338,19 @@ type User2 = User 类型别名
   项目外部是无法导入这个 internal 目录下面的包的。可以说，internal 目录的引入，让一个 Go 项目中 Go 包的分类与用途变得更加清晰。
 * 多个 defer 注册，按 FILO 次序执行 ( 先进后出 )。哪怕函数或某个延迟调用发生错误，这些调用依旧会被执行。
 * 函数指针并不直接指向函数所在的地址，而是指向一段数据，其中才是函数的地址。匿名函数可以访问到函数的局部变量
+* 不修改原结构体，可以通过创建一个结构题，匿名嵌套原结构体，同时指定忽略字段为匿名结构体指针类型，并添加omitempty
+  ```
+    type User struct {
+        Name     string `json:"name"`
+        Password string `json:"password"`
+        Age      int32 `json:"age,string"`
+    }
+    type PublicUser struct {
+        *User // 匿名嵌套
+        Password *struct{} `json:"password,omitempty"`
+    }
+  ```
+* json数据中有字符串类型的数字，可以在tag中添加string,从字符串解析相应字段的数据
 
 ***
 

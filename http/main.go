@@ -36,8 +36,9 @@ func main() {
 	queryValues, _ := url.ParseQuery(us.RawQuery)
 	fmt.Println(queryValues)
 	queryValues.Add("sendId", "23")
+	queryValues.Add("sendId", "33")
 	us.RawQuery = queryValues.Encode()
-	fmt.Println(us.String())
+	fmt.Println("RawQuery", us.RawQuery, us.String())
 	resp, err := http.Get("http://www.baidu.com")
 	defer resp.Body.Close()
 

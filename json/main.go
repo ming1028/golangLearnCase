@@ -21,7 +21,7 @@ func main() {
 		Weight: 444,
 	}
 	user1Json, _ := json.Marshal(PubPerson{Person: &user1})
-	fmt.Println(string(user1Json))
+	fmt.Println("嵌套匿名结构体：", string(user1Json))
 
 	jsonStr1 := `{"id": "1234567","score": "88.50"}` // string id score convert to int cannot unmarshal string into Go struct field Card.id of type int64
 	var c1 Card
@@ -68,15 +68,15 @@ func main() {
 
 type PubPerson struct {
 	*Person
-	Name *struct{} `json:"name,omitempty"`
+	Name *struct{} `json:"name"` // 同名json tag覆盖匿名结构体內同名
 }
 
 type Person struct {
 	Name   string   `json:"name"`
-	Weight float64  `json:"-"`
-	Hobby  []string `json:"hobby,omitempty"`
+	Weight float64  `json:"-"`               // 忽略该值
+	Hobby  []string `json:"hobby,omitempty"` // 为空不输出
 	Other
-	Other2 Other `json:"other2"`
+	Other2 Other `json:"other2,omitempty"` // 想要在嵌套的结构体为空值时忽略该字段，需要添加omitempty,还需要使用嵌套的结构体指针
 }
 
 type Other struct {
