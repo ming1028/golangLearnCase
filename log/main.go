@@ -7,6 +7,7 @@ import (
 )
 
 func main() {
+	// 00001100 00000100 00000001 ｜ 按位或
 	log.SetFlags(log.Llongfile | log.Lmicroseconds | log.Ldate)
 	fmt.Println(log.Flags())
 	log.SetPrefix("[log]")

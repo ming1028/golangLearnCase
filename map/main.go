@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"time"
 )
 
 func main() {
@@ -14,10 +13,10 @@ func main() {
 		"d": 4,
 	}
 	// mj, _ := json.Marshal(m1)
-	for i := 0; i <= 20; i++ {
+	/*for i := 0; i <= 20; i++ {
 		j := i
-		/*m22 := make(map[string]int)
-		json.Unmarshal(mj, m22)*/
+		// m22 := make(map[string]int)
+		// json.Unmarshal(mj, m22)
 		go func() {
 			time.Sleep(time.Second)
 			m1["a"] = j
@@ -25,8 +24,8 @@ func main() {
 		}()
 	}
 	time.Sleep(time.Second * 15)
-	fmt.Println(m1)
-	/*m2 := make(map[string]int)
+	fmt.Println(m1)*/
+	m2 := make(map[string]int)
 	m2 = m1
 	m2["a"] = 333
 	fmt.Println(m1, m2)
@@ -36,5 +35,5 @@ func main() {
 	for v := range m1 {
 		fmt.Println(v)
 	}
-	fmt.Println(m1)*/
+	fmt.Println(m1)
 }

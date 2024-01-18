@@ -365,7 +365,6 @@ type User2 = User 类型别名
     - 每次调用select,都需要把fd集合从用户态拷贝到内核态，开销大
     - 性能衰减严重，每次kernal都需要线性扫描整个fd_set，随着fd数量增长，I/O性能线性下降
 
-
 ### go实用操作库
 
 * ```
@@ -399,4 +398,8 @@ type User2 = User 类型别名
 * ```
   协程池操作
   github.com/sourcegraph/conc
+  ```
+* ```
+  json解析 根据key获取相应字段
+  github.com/buger/jsonparser
   ```

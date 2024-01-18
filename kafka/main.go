@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/Shopify/sarama"
+	"github.com/IBM/sarama"
 )
 
 func main() {
@@ -15,12 +15,13 @@ func main() {
 		Topic: "topic",
 		Value: sarama.StringEncoder("first send msg"),
 	}
-	client, err := sarama.NewSyncProducer([]string{"127.0.0.1:2222"}, config)
+	// 同步模式下 asyc异步
+	syncProducer, err := sarama.NewSyncProducer([]string{"127.0.0.1:2222"}, config)
 	if err != nil {
 		return
 	}
-	defer client.Close()
+	defer syncProducer.Close()
 
-	pid, offset, err := client.SendMessage(msg)
+	pid, offset, err := syncProducer.SendMessage(msg)
 	fmt.Println(pid, offset, err)
 }
