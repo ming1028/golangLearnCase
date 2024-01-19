@@ -16,7 +16,7 @@ type Foo struct {
 }
 
 type Bar struct {
-	x int32 // 4字节 一字节8位
+	x int64 // 8字节 一字节8位
 	y *Foo  // 8??
 	z bool  // 1
 }
@@ -46,7 +46,8 @@ type Bar5 struct {
 type Bar6 struct {
 	n bool   // 1
 	m int32  // 4
-	d string // 8
+	d string // 16
+	h int64  // 8
 }
 
 /**
@@ -54,7 +55,8 @@ type Bar6 struct {
  */
 func main() {
 	var b6 Bar6
-	fmt.Println("Bar6", unsafe.Sizeof(b6), unsafe.Alignof(b6.n), unsafe.Alignof(b6.m), unsafe.Alignof(b6.d))
+	fmt.Println("Bar6", unsafe.Sizeof(b6), unsafe.Alignof(b6.n), unsafe.Alignof(b6.m),
+		unsafe.Alignof(b6.d), unsafe.Sizeof(b6.d), unsafe.Alignof(b6.h), unsafe.Sizeof(b6.h))
 	var f Foo
 	var in int
 	// uintptr 指针占用8字节
