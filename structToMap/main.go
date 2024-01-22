@@ -90,4 +90,10 @@ func main() {
 	for k, v := range user1Map4 {
 		fmt.Println(k, v, fmt.Sprintf("%T", v))
 	}
+
+	// 返回所有value的切片 []interface{}
+	fmt.Println(structs.Values(dt))
+	fmt.Println(structs.Names(dt))
+	fmt.Println("fields", structs.Fields(user1))
+	fmt.Println("name", structs.Name(dt))
 }

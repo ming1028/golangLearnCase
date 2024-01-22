@@ -416,6 +416,6 @@ type User2 = User 类型别名
   golang.org/x/sync/singleflight
   ```
 * ```
-  结构题map互相转
+  结构体map互相转
   github.com/fatih/structs
   ```
