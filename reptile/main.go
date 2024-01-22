@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 	"regexp"
@@ -18,13 +18,13 @@ var (
 )
 
 func main() {
-	resp, err := http.Get("https://tieba.baidu.com/p/6051076813?red_tag=1573533731")
+	resp, err := http.Get("https://tieba.baidu.com/p/6154053762")
 	if err != nil {
 		log.Fatalf("http get err:%#v\n", err)
 	}
 	defer resp.Body.Close()
 
-	pageBytes, err := ioutil.ReadAll(resp.Body)
+	pageBytes, err := io.ReadAll(resp.Body)
 	if err != nil {
 		log.Fatalf("ioutil ReadAll err:%#v\n", err)
 	}

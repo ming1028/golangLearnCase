@@ -20,6 +20,7 @@ func main() {
 
 type db struct {
 	Server string
+	Ports  []int32
 }
 
 type serv struct {

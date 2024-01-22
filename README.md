@@ -403,3 +403,15 @@ type User2 = User 类型别名
   json解析 根据key获取相应字段
   github.com/buger/jsonparser
   ```
+* ```
+  配置文件读取
+  github.com/spf13/viper
+  ```
+* ```
+  配置文件读取
+  gopkg.in/ini.v1
+  ```
+* ```
+  提供了重复函数调用的抑制功能，同一时刻同一key的调用，只会有一个被执行，防止
+  golang.org/x/sync/singleflight
+  ```

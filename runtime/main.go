@@ -18,10 +18,10 @@ func main() {
 		fmt.Println("hello")
 		runtime.Gosched() // 让出cpu允许其他goroutine执行
 	}
-	runtime.GOMAXPROCS(2)
+	runtime.GOMAXPROCS(1)
 	go a()
 	go b()
-	time.Sleep(time.Second)
+	time.Sleep(time.Hour)
 }
 
 func a() {
