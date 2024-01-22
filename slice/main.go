@@ -23,10 +23,13 @@ func main() {
 	n = copy(sli4, sli3)
 	fmt.Println(n, sli4, sli3)
 
-	sli := make([]int, 3, 5)
+	arr := [5]int{}
+	sli := arr[0:3]
+	// sli := make([]int, 3, 5) // 0 0 0
 	sli[0] = 1
 	sli[1] = 2
-	change(sli...)
+	// sli: 1 2 0
+	change(sli...) // 第一次append之后 底层数组为：1 2 0 3 未发生扩容
 	fmt.Println(sli)
 	sli2 = sli[0:2]
 	change(sli2...)

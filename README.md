@@ -415,3 +415,7 @@ type User2 = User 类型别名
   提供了重复函数调用的抑制功能，同一时刻同一key的调用，只会有一个被执行，防止
   golang.org/x/sync/singleflight
   ```
+* ```
+  结构题map互相转
+  github.com/fatih/structs
+  ```
