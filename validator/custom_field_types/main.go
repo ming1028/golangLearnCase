@@ -18,7 +18,7 @@ func main() {
 	validate.RegisterCustomTypeFunc(ValidateValuer, sql.NullString{}, sql.NullInt64{}, sql.NullBool{}, sql.NullFloat64{})
 
 	x := DbBackedUser{
-		Name: sql.NullString{String: "1", Valid: true},
+		Name: sql.NullString{String: "1", Valid: false},
 		Age:  sql.NullInt64{Int64: 1, Valid: true},
 	}
 	err := validate.Struct(x)

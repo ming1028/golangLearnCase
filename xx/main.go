@@ -39,7 +39,7 @@ func main() {
 		fmt.Println(len(ps))
 	}
 
-	nil := 123
+	nil := 123 // nil 变量？
 	fmt.Println(nil)
 
 	ts := [2]Ts{}
@@ -49,10 +49,10 @@ func main() {
 			t.n = 3
 			ts[1].n = 9
 		case 1:
-			fmt.Print(t.n, " ")
+			fmt.Println(t.n, " ")
 		}
 	}
-	fmt.Print(ts)
+	fmt.Println(ts)
 
 	eg := new(errgroup.Group)
 	chNum := make(chan int, 1)

@@ -419,3 +419,7 @@ type User2 = User 类型别名
   结构体map互相转
   github.com/fatih/structs
   ```
+* ```
+  验证
+  github.com/go-playground/validator
+  ```

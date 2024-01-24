@@ -15,6 +15,7 @@ func main() {
 	_ = m[123]
 
 	var p *[5]string
+	fmt.Println("*[5]string长度：", len(p))
 	for range p {
 		_ = len(p)
 	}

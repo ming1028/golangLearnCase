@@ -24,9 +24,9 @@ func err1() error {
 
 func err2() error {
 	err := err3()
-	return errors.WithMessage(err, "err2 error")
+	return errors.WithMessage(err, "err2 调用")
 }
 
 func err3() error {
-	return errors.Wrapf(errors.New("错误发生"), "err3 err")
+	return errors.Wrapf(errors.New("err3错误发生"), "err3")
 }

@@ -130,8 +130,6 @@ func main() {
 
 			fmt.Println(string(indent))
 		}
-
-		// from here you can create your own error messages in whatever language you wish
 		return
 	}
 }
@@ -144,6 +142,4 @@ func UserStructLevelValidation(sl validator.StructLevel) {
 		sl.ReportError(user.FirstName, "fname", "FirstName", "fnameorlname", "")
 		sl.ReportError(user.LastName, "lname", "LastName", "fnameorlname", "")
 	}
-
-	// plus can do more, even with different tag than "fnameorlname"
 }
