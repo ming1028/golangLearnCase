@@ -402,6 +402,8 @@ type User2 = User 类型别名
 * ```
   json解析 根据key获取相应字段
   github.com/buger/jsonparser
+  从json中获取值
+  github.com/tidwall/gjson
   ```
 * ```
   配置文件读取
