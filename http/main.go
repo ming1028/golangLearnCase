@@ -89,6 +89,7 @@ func main() {
 
 	// 注册处理器
 	serverMux.Handle("/handler", TestHandler{})
+	http.ListenAndServe("", serverMux)
 }
 
 // handler函数
