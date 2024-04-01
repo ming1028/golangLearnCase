@@ -1,6 +1,8 @@
 module github.com/golangLearnCase
 
-go 1.19
+go 1.21.3
+
+toolchain go1.21.8
 
 require (
 	github.com/IBM/sarama v1.42.1
