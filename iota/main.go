@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"reflect"
+	"time"
 )
 
 type Direction int
@@ -31,4 +32,18 @@ const (
 func main() {
 	fmt.Println(a, b, c, e, f, g, North, East, South, West)
 	fmt.Println(reflect.TypeOf(East), reflect.TypeOf(West))
+	demo()
+	time.Sleep(time.Hour)
+}
+
+func demo() {
+	go demo2()
+	time.Sleep(time.Second * 3)
+	fmt.Println(111)
+	return
+}
+
+func demo2() {
+	time.Sleep(time.Second * 10)
+	fmt.Println(222)
 }

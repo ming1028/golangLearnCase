@@ -31,7 +31,7 @@ func main() {
 	val, dataType, offset, err := jsonparser.Get(data, "person", "name", "fullName")
 	fmt.Println(string(val), dataType, offset, err)
 
-	val, dataType, offset, err = jsonparser.Get(data, "person", "github", "followers")
+	val, dataType, offset, err = jsonparser.Get(data, "person", "github")
 	fmt.Println(string(val), dataType, offset, err)
 	/*// json number类型转int
 	intSli := make([]byte, 0, 4)
