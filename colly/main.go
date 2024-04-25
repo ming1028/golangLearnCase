@@ -3,36 +3,33 @@ package main
 import (
 	"fmt"
 	"github.com/gocolly/colly/v2"
+	"strings"
 )
 
 func main() {
-
-	collector := colly.NewCollector(
-		colly.AllowedDomains("https://www.collinsdictionary.com/"),
-	)
+	fmt.Println("trim:", len(strings.TrimSpace("   ")))
+	collector := colly.NewCollector()
 	// 在请求之前调用
 	collector.OnRequest(func(request *colly.Request) {
-		fmt.Println("123")
-		fmt.Println(request.URL)
+		fmt.Println("request", request.URL)
 	})
 	// 错误
 	collector.OnError(func(response *colly.Response, err error) {
-		fmt.Println("123")
+		fmt.Println("Error:123")
 		fmt.Println(err, response.StatusCode)
 	})
 	collector.OnResponse(func(response *colly.Response) {
-		fmt.Println("123")
-		fmt.Println(string(response.Body))
+		fmt.Println("response", response.StatusCode)
 	})
-	collector.OnHTML(".sense", func(e *colly.HTMLElement) {
-		fmt.Println(e.Text)
+	collector.OnHTML(".s_menu_mine", func(e *colly.HTMLElement) {
+		fmt.Println("html:", e.Text)
 		definition := e.ChildText("div.definition")
 		fmt.Println("Definition:", definition)
 	})
 
 	// 接收到的内容是XML ,则在之后调用
 	collector.OnXML("//h1", func(e *colly.XMLElement) {
-		fmt.Println(e.Text)
+		fmt.Println("OnXML", e.Text)
 	})
 
 	// 回调后调用
