@@ -1,8 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 func main() {
+	strings.Contains("abc", " ")
 	m := 1
 	m <<= 1 // 向左位移赋值  >> 向右位移
 	fmt.Println("位移", m)
