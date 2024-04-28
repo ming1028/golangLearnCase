@@ -3,11 +3,10 @@ package main
 import (
 	"fmt"
 	"github.com/gocolly/colly/v2"
-	"strings"
+	"time"
 )
 
 func main() {
-	fmt.Println("trim:", len(strings.TrimSpace("   ")))
 	collector := colly.NewCollector()
 	// 在请求之前调用
 	collector.OnRequest(func(request *colly.Request) {
@@ -15,16 +14,20 @@ func main() {
 	})
 	// 错误
 	collector.OnError(func(response *colly.Response, err error) {
-		fmt.Println("Error:123")
-		fmt.Println(err, response.StatusCode)
+
+		fmt.Println("Error:", err)
+		time.Sleep(time.Second)
+		err = response.Request.Retry()
+		if err != nil {
+			fmt.Println("retry:", err)
+		}
 	})
 	collector.OnResponse(func(response *colly.Response) {
-		fmt.Println("response", response.StatusCode)
+		fmt.Println("response body length:", len(response.Body))
 	})
-	collector.OnHTML(".s_menu_mine", func(e *colly.HTMLElement) {
-		fmt.Println("html:", e.Text)
-		definition := e.ChildText("div.definition")
-		fmt.Println("Definition:", definition)
+	collector.OnHTML(".index_news_list_p_5zOEF", func(e *colly.HTMLElement) {
+		attr := e.ChildAttr("a", "href")
+		fmt.Println(attr, e.Text)
 	})
 
 	// 接收到的内容是XML ,则在之后调用
@@ -36,6 +39,10 @@ func main() {
 	collector.OnScraped(func(r *colly.Response) {
 		fmt.Println("Finished", r.Request.URL)
 	})
-	err := collector.Visit("https://baidu.com")
+
+	err := collector.Limit(&colly.LimitRule{
+		Parallelism: 5,
+	})
+	err = collector.Visit("https://www.ifeng.com/")
 	fmt.Println(err)
 }
