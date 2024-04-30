@@ -16,7 +16,7 @@ func main() {
 	pb := &nlp.Document{}
 
 	// run NLP and receive data in pb
-	err := cmd.RunText(context.Background(), []byte(`Stanford University is located in California. It is a great university, founded in 1891.`), pb)
+	err := cmd.RunText(context.Background(), []byte(`i'm a student`), pb)
 	if err != nil {
 		panic(err)
 	}
