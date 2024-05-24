@@ -11,9 +11,11 @@ func main() {
 		Name:   "test",
 		Weight: 20,
 	}
+	userJsonIndent, _ := json.MarshalIndent(user, "<prefix>", "<indent>")
+	fmt.Println(string(userJsonIndent))
 	// 字段没有值时, 默认输出字段的类型零值, 忽略没有值的字段，添加omitempty， json忽略输出: -
 	userJson, _ := json.Marshal(user)
-	fmt.Println(userJson, string(userJson))
+	fmt.Println(string(userJson))
 
 	// 不修改原结构体忽略空值字段
 	user1 := Person{
