@@ -10,14 +10,13 @@ import (
 
 func SplitWords(s string) []string {
 	return strings.FieldsFunc(s, func(r rune) bool {
-		bl := unicode.IsPunct(r) || unicode.IsSpace(r)
-		fmt.Println(string(r), bl)
-		return bl
+		return unicode.IsSpace(r)
 	})
 }
 
 func main() {
-	SplitWords("Airstrip one of the three world.")
+	s := SplitWords(" ")
+	fmt.Println(s)
 	return
 	url := "http://127.0.0.1:8080/v1/word/mark"
 	method := "POST"
