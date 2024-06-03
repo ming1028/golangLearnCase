@@ -11,11 +11,13 @@ require (
 	github.com/bits-and-blooms/bloom/v3 v3.5.0
 	github.com/buger/jsonparser v1.1.1
 	github.com/cheekybits/genny v1.0.0
+	github.com/deckarep/golang-set/v2 v2.6.0
 	github.com/elliotchance/pie v1.39.0
 	github.com/elliotchance/testify-stats v1.0.0
 	github.com/fatih/structs v1.1.0
 	github.com/genelet/corenlp-golang v0.4.5
 	github.com/gin-gonic/gin v1.9.0
+	github.com/go-ego/gse v0.80.2
 	github.com/go-playground/locales v0.14.1
 	github.com/go-playground/universal-translator v0.18.1
 	github.com/go-playground/validator/v10 v10.15.4
@@ -27,6 +29,7 @@ require (
 	github.com/google/wire v0.5.0
 	github.com/gorilla/mux v1.8.0
 	github.com/gorilla/websocket v1.5.1
+	github.com/jdkato/prose/v2 v2.0.0
 	github.com/jinzhu/gorm v1.9.16
 	github.com/juju/ratelimit v1.0.2
 	github.com/loveleshsharma/gohive v0.0.0-20231119054340-f98e85308c6f
@@ -39,6 +42,7 @@ require (
 	github.com/spf13/cast v1.5.0
 	github.com/spf13/viper v1.15.0
 	github.com/vmihailenco/msgpack v4.0.4+incompatible
+	github.com/volcengine/volc-sdk-golang v1.0.159
 	github.com/wuqinqiang/easyio v0.0.0-20230604021332-b0fdca2d589a
 	go.mongodb.org/mongo-driver v1.11.2
 	go.uber.org/ratelimit v0.2.0
@@ -60,6 +64,7 @@ require (
 	github.com/antchfx/xpath v1.1.8 // indirect
 	github.com/bits-and-blooms/bitset v1.8.0 // indirect
 	github.com/bytedance/sonic v1.8.0 // indirect
+	github.com/cenkalti/backoff/v4 v4.2.1 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
@@ -71,13 +76,14 @@ require (
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.2 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
-	github.com/go-ego/gse v0.80.2 // indirect
 	github.com/go-ole/go-ole v1.3.0 // indirect
 	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/goccy/go-json v0.10.0 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
+	github.com/google/martian v2.1.0+incompatible // indirect
+	github.com/google/uuid v1.6.0 // indirect
 	github.com/hashicorp/errwrap v1.0.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/hashicorp/go-uuid v1.0.3 // indirect
@@ -87,7 +93,6 @@ require (
 	github.com/jcmturner/gofork v1.7.6 // indirect
 	github.com/jcmturner/gokrb5/v8 v8.4.4 // indirect
 	github.com/jcmturner/rpc/v2 v2.0.3 // indirect
-	github.com/jdkato/prose/v2 v2.0.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
@@ -119,7 +124,6 @@ require (
 	github.com/ugorji/go/codec v1.2.9 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/vcaesar/cedar v0.20.1 // indirect
-	github.com/volcengine/volc-sdk-golang v1.0.159 // indirect
 	github.com/xdg-go/pbkdf2 v1.0.0 // indirect
 	github.com/xdg-go/scram v1.1.2 // indirect
 	github.com/xdg-go/stringprep v1.0.4 // indirect
