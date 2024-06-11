@@ -3,7 +3,10 @@ package main
 import (
 	"bytes"
 	"fmt"
+	"golang.org/x/net/html"
+	"io"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -18,6 +21,8 @@ const (
 )
 
 func main() {
+	getUrl("https://36kr.com/p/2814959596870537")
+	return
 	HttpClient = &http.Client{
 		Transport: &http.Transport{
 			MaxIdleConnsPerHost: MaxIdleConnections,
@@ -42,4 +47,47 @@ func main() {
 	}
 
 	time.Sleep(time.Hour)
+}
+
+func getUrl(url string) {
+	resp, err := http.Get(url)
+	if err != nil {
+		return
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		return
+	}
+
+	// 使用 io.ReadAll 获取响应体内容
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return
+	}
+
+	doc, err := html.Parse(strings.NewReader(string(body)))
+	if err != nil {
+		return
+	}
+	fmt.Println(len(extractText(doc)))
+}
+
+func extractText(n *html.Node) string {
+	if n.Type == html.TextNode {
+		return n.Data
+	}
+	var text string
+	/*for c := n.FirstChild; c != nil; c = c.NextSibling {
+		text += extractText(c)
+	}*/
+	var c *html.Node
+	if n.FirstChild != nil {
+		c = n.FirstChild
+	} else if n.NextSibling != nil {
+		c = n.NextSibling
+	}
+	if c != nil {
+		text = extractText(c)
+	}
+	return text
 }
