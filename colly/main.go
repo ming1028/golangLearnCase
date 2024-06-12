@@ -2,7 +2,6 @@ package main
 
 import (
 	"crypto/aes"
-	"crypto/cipher"
 	"encoding/base64"
 	"errors"
 	"fmt"
@@ -86,12 +85,16 @@ func AesDeCrypt(cypted []byte, key []byte) ([]byte, error) {
 		return nil, err
 	}
 	// 获取块大小
-	blockSize := block.BlockSize()
+	// blockSize := block.BlockSize()
 	// 创建加密客户端实例
-	blockMode := cipher.NewCBCDecrypter(block, key[:blockSize]) // 使用密钥作为偏移量
+	// blockMode := cipher.NewCBCDecrypter(block, key[:blockSize]) // 使用密钥作为偏移量
 	origData := make([]byte, len(cypted))
 	// 这个函数也可以用来解密
-	blockMode.CryptBlocks(origData, cypted)
+	// blockMode.CryptBlocks(origData, cypted)
+	for bs := 0; bs < len(cypted); bs += block.BlockSize() {
+		block.Decrypt(origData[bs:bs+block.BlockSize()], cypted[bs:bs+block.BlockSize()])
+	}
+	block.Decrypt(origData, cypted)
 	fmt.Println(string(origData))
 	// 去除填充字符串
 	origData, err = PKCS7UnPadding(origData)

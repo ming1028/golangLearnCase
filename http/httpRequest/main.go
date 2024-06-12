@@ -6,6 +6,7 @@ import (
 	"golang.org/x/net/html"
 	"io"
 	"net/http"
+	"regexp"
 	"strings"
 	"time"
 )
@@ -22,6 +23,10 @@ const (
 
 func main() {
 	getUrl("https://36kr.com/p/2814959596870537")
+	html := `<html><body><h1>My Heading</h1><p>This is a paragraph.</p><p>This is another paragraph.</p></body></html>`
+	re := regexp.MustCompile("<.*?>")
+	text := re.ReplaceAllString(html, "")
+	fmt.Println(text)
 	return
 	HttpClient = &http.Client{
 		Transport: &http.Transport{
@@ -77,10 +82,10 @@ func extractText(n *html.Node) string {
 		return n.Data
 	}
 	var text string
-	/*for c := n.FirstChild; c != nil; c = c.NextSibling {
+	for c := n.FirstChild; c != nil; c = c.NextSibling {
 		text += extractText(c)
-	}*/
-	var c *html.Node
+	}
+	/*var c *html.Node
 	if n.FirstChild != nil {
 		c = n.FirstChild
 	} else if n.NextSibling != nil {
@@ -88,6 +93,6 @@ func extractText(n *html.Node) string {
 	}
 	if c != nil {
 		text = extractText(c)
-	}
+	}*/
 	return text
 }
