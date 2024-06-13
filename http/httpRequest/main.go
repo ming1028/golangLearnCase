@@ -84,7 +84,7 @@ func getUrl(url string) {
 			return
 		}
 		fmt.Printf("Tag: %s\n", goquery.NodeName(element))
-		// 打印属性
+		// 打印属性 onclick等行内属性
 		for _, attr := range element.Nodes[0].Attr {
 			fmt.Printf("  Attribute: %s=\"%s\"\n", attr.Key, attr.Val)
 		}
@@ -94,11 +94,20 @@ func getUrl(url string) {
 			fmt.Printf("  Text: %s\n", text)
 		}
 	})
-	/*doc, err := html.Parse(strings.NewReader(string(body)))
-	if err != nil {
-		return
-	}
-	traverse(doc, 0)*/
+	/*body = []byte(`<html>
+	  <body>
+	    <h1>Welcome</h1>
+	    <p onclick="alert('Hi!')">This is an example paragraph.</p>
+	    <a href="javascript:void(0)">Click me</a>
+	    <img src="example.jpg" onerror="alert('Error!')">
+	    <style>body {font-size: 12px;}</style>
+	  </body>
+	</html>`)
+		doc, err := html.Parse(bytes.NewReader(body))
+		if err != nil {
+			return
+		}
+		traverse(doc, 0)*/
 }
 
 func traverse(node *html.Node, depth int) {
