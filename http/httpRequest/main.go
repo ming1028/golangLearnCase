@@ -3,6 +3,8 @@ package main
 import (
 	"bytes"
 	"fmt"
+	"github.com/PuerkitoBio/goquery"
+	mapset "github.com/deckarep/golang-set/v2"
 	"golang.org/x/net/html"
 	"io"
 	"net/http"
@@ -23,6 +25,7 @@ const (
 
 func main() {
 	getUrl("https://36kr.com/p/2814959596870537")
+	return
 	html := `<html><body><h1>My Heading</h1><p>This is a paragraph.</p><p>This is another paragraph.</p></body></html>`
 	re := regexp.MustCompile("<.*?>")
 	text := re.ReplaceAllString(html, "")
@@ -70,11 +73,54 @@ func getUrl(url string) {
 		return
 	}
 
-	doc, err := html.Parse(strings.NewReader(string(body)))
+	// goquery解析
+	doc, _ := goquery.NewDocumentFromReader(bytes.NewReader(body))
+	doc.Find("*").Each(func(index int, element *goquery.Selection) {
+		// 打印标签名
+		tag := goquery.NodeName(element)
+		need := []string{"div", "p", "title"}
+		ms := mapset.NewSet[string](need...)
+		if !ms.Contains(tag) {
+			return
+		}
+		fmt.Printf("Tag: %s\n", goquery.NodeName(element))
+		// 打印属性
+		for _, attr := range element.Nodes[0].Attr {
+			fmt.Printf("  Attribute: %s=\"%s\"\n", attr.Key, attr.Val)
+		}
+
+		// 打印文本内容
+		if text := strings.TrimSpace(element.Text()); text != "" {
+			fmt.Printf("  Text: %s\n", text)
+		}
+	})
+	/*doc, err := html.Parse(strings.NewReader(string(body)))
 	if err != nil {
 		return
 	}
-	fmt.Println(len(extractText(doc)))
+	traverse(doc, 0)*/
+}
+
+func traverse(node *html.Node, depth int) {
+	if node.Type == html.ElementNode {
+		fmt.Printf("%s<%s>\n", strings.Repeat("  ", depth), node.Data)
+		if node.Data == "script" {
+			fmt.Println("script")
+		}
+		for _, attr := range node.Attr {
+			fmt.Printf("%s  %s=\"%s\"\n", strings.Repeat("  ", depth), attr.Key, attr.Val)
+		}
+	} else if node.Type == html.TextNode {
+		fmt.Printf("%s%s\n", strings.Repeat("  ", depth), node.Data)
+	}
+
+	for child := node.FirstChild; child != nil; child = child.NextSibling {
+		traverse(child, depth+1)
+	}
+
+	if node.Type == html.ElementNode {
+		fmt.Printf("%s</%s>\n", strings.Repeat("  ", depth), node.Data)
+	}
 }
 
 func extractText(n *html.Node) string {
