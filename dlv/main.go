@@ -29,6 +29,7 @@ func main() {
 	if err != nil {
 		return
 	}
+	RandIdx(2, 5)
 }
 func RandIdx(l, need int) []int {
 	ret := make([]int, 0, need)
