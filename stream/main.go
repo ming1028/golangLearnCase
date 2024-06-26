@@ -7,8 +7,14 @@ import (
 )
 
 func main() {
+	req, _ := http.NewRequest(http.MethodGet, "http://localhost:8088/streamGet", nil)
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Accept", "text/event-stream")
+	req.Header.Set("Cache-Control", "no-cache")
+	req.Header.Set("Connection", "keep-alive")
 	fmt.Println("开始")
-	resp, err := http.Get("http://localhost:8088/streamGet")
+	client := &http.Client{}
+	resp, err := client.Do(req)
 	if err != nil {
 		fmt.Println("Error:", err)
 		return
