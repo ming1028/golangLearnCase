@@ -27,5 +27,5 @@ func main() {
 	collector.OnHTML(".job-card-body clearfix", func(e *colly.HTMLElement) {
 		fmt.Println(e.Text)
 	})
-	collector.Visit("https://www.zhipin.com/job_detail/?city=101020100&source=10&query=%E7%94%B5%E6%B0%94%E8%87%AA%E5%8A%A8%E5%8C%96")
+	collector.Visit("https://www.zhipin.com/wapi/zpgeek/search/job/seo/data.json?city=101020100&position=&industry=&multiBusinessDistrict=&jobCity=101020100")
 }
