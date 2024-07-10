@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"github.com/spf13/cast"
 	"sync"
@@ -17,6 +18,14 @@ func main() {
 	go worker()
 	wg.Wait()
 	fmt.Println("over")*/
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	go doSomething(ctx)
+	select {
+	case <-ctx.Done():
+		fmt.Println("超时")
+		cancel()
+	}
+	time.Sleep(time.Second * 20)
 	for i := 0; i < 3; i++ {
 		var Wat WxAccToken
 		val, ok := AppIdAccToken.Load(cast.ToString(1))
@@ -49,4 +58,11 @@ type WxAccToken struct {
 	ExpiresAt   time.Time `json:"expires_at"`
 	AccessToken string    `json:"access_token"`
 	ExpiresIn   int32     `json:"expires_in"`
+}
+
+func doSomething(ctx context.Context) {
+	for i := 0; i < 10; i++ {
+		fmt.Println(i)
+		time.Sleep(time.Second)
+	}
 }
