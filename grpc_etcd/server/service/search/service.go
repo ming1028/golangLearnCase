@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/golangLearnCase/grpc_etcd/server/proto/pb"
 	"github.com/spf13/cast"
+	"log"
 	"math/rand"
 )
 
@@ -18,6 +19,7 @@ func (s *SearchService) Search(
 	*pb.SearchResp,
 	error,
 ) {
+	log.Println("Search Request:", req.GetName())
 	return &pb.SearchResp{
 		RespName: req.GetName() + cast.ToString(rand.Intn(100)),
 	}, nil

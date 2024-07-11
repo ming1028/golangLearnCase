@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/golangLearnCase/grpc_etcd/server/pkg/xetcd"
 	"github.com/golangLearnCase/grpc_etcd/server/proto/pb"
 	"github.com/golangLearnCase/grpc_etcd/server/service/search"
 	"github.com/spf13/cast"
@@ -19,5 +20,9 @@ func main() {
 	if err != nil {
 		log.Fatalf("net listen err: %v", err)
 	}
+
+	// 服务注册
+	xetcd.RegisterEtcdService()
+
 	log.Fatal(grpcServer.Serve(lis))
 }
