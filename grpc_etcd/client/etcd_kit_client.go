@@ -12,6 +12,7 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 	"io"
 	"log"
+	http2 "net/http"
 	"os"
 	"time"
 )
@@ -40,6 +41,17 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	/*f := func(servicesUrl string) (endpoint.Endpoint, io.Closer, error) {
+		// 解析url
+		target, err := url.Parse("http://" + servicesUrl)
+		log.Println(target)
+		if err != nil {
+			return nil, nil, err
+		}
+		return http.NewClient(http2.MethodGet, target, EncReq, DecResp).Endpoint(), nil, nil
+	}
+	endpointer := sd.NewEndpointer(instancer, f, logger)*/
 
 	endpointer := sd.NewEndpointer(instancer, ReqFactory(), logger)
 
@@ -76,4 +88,12 @@ func ReqFactory() sd.Factory {
 			return client.Search(ctx, req)
 		}, conn, nil
 	}
+}
+
+func EncReq(ctx context.Context, req *http2.Request, i interface{}) error {
+	return nil
+}
+
+func DecResp(ctx context.Context, resp *http2.Response) (response interface{}, err error) {
+	return resp, nil
 }
