@@ -2,6 +2,8 @@ package search
 
 import (
 	"context"
+	"github.com/go-kit/kit/endpoint"
+	"github.com/go-kit/kit/transport/grpc"
 	"github.com/golangLearnCase/grpc_etcd/server/proto/pb"
 	"github.com/spf13/cast"
 	"log"
@@ -10,6 +12,7 @@ import (
 
 type SearchService struct {
 	pb.UnimplementedSearchServiceServer
+	SearchEndpointHandler grpc.Handler
 }
 
 func (s *SearchService) Search(
@@ -23,4 +26,13 @@ func (s *SearchService) Search(
 	return &pb.SearchResp{
 		RespName: req.GetName() + cast.ToString(rand.Intn(100)),
 	}, nil
+}
+
+func SearchEndpoint() endpoint.Endpoint {
+	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
+		req := request.(*pb.SearchReq)
+		return &pb.SearchResp{
+			RespName: req.GetName() + cast.ToString(rand.Intn(100)),
+		}, nil
+	}
 }
