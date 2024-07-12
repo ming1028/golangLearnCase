@@ -42,17 +42,6 @@ func main() {
 		log.Fatal(err)
 	}
 
-	/*f := func(servicesUrl string) (endpoint.Endpoint, io.Closer, error) {
-		// 解析url
-		target, err := url.Parse("http://" + servicesUrl)
-		log.Println(target)
-		if err != nil {
-			return nil, nil, err
-		}
-		return http.NewClient(http2.MethodGet, target, EncReq, DecResp).Endpoint(), nil, nil
-	}
-	endpointer := sd.NewEndpointer(instancer, f, logger)*/
-
 	endpointer := sd.NewEndpointer(instancer, ReqFactory(), logger)
 
 	// 创建负载均衡器
