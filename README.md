@@ -353,8 +353,7 @@ type User2 = User 类型别名
 * json数据中有字符串类型的数字，可以在tag中添加string,从字符串解析相应字段的数据
 * http.Server 如果server的Handler为nil,将使用DefaultServeMux(全局变量)作为handler
 * 使用http.NewServeMux 多路复用器中的Handle或者HandleFunc定义各种路由，赋值给server.Handler(http.ListenAndServe)
-* 
-
+*
 
 ***
 
@@ -429,3 +428,9 @@ type User2 = User 类型别名
   验证
   github.com/go-playground/validator
   ```
+
+## postgresql
+
+* <-> 计算欧几里得距离
+* <=> 余弦相似度
+* 点积
