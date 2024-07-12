@@ -15,7 +15,7 @@ import (
 const PORT = 9099
 
 const (
-	etcdEndpoints = "localhost:2379" // etcd 服务地址
+	etcdEndpoints = "localhost:2388" // etcd 服务地址
 	serviceName   = "search-service"
 	serviceKey    = "/services/" + serviceName
 	serviceValue  = "127.0.0.1:9099"
@@ -30,16 +30,19 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	etcdResolver, err := resolver.NewBuilder(client)
-	if err != nil {
-		panic(err)
-	}
+	defer client.Close()
+
 	addrs := DiscoverService()
 	if len(addrs) == 0 {
 		panic("no discovery service")
 	}
-	conn, err := grpc.NewClient(addrs[0], grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithResolvers(etcdResolver))
-	// conn, err := grpc.Dial("etcd://"+serviceKey, grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithResolvers(etcdResolver))
+	etcdResolver, err := resolver.NewBuilder(client)
+	if err != nil {
+		panic(err)
+	}
+	// conn, err := grpc.NewClient("etcd://"+serviceKey, grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithResolvers(etcdResolver))
+	// conn, err := grpc.NewClient(addrs[0], grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.Dial("etcd:/"+serviceKey, grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithResolvers(etcdResolver))
 	if err != nil {
 		panic(err)
 	}
@@ -68,7 +71,7 @@ func DiscoverService() []string {
 		panic(err)
 	}
 
-	resp, err := client.Get(context.Background(), serviceKey, clientv3.WithPrefix())
+	resp, err := client.Get(context.Background(), serviceKey)
 	if err != nil {
 		panic(err)
 	}

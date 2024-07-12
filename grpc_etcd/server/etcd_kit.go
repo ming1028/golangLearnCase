@@ -17,7 +17,7 @@ import (
 
 const (
 	ServiceAddress    = ":9100"
-	EtcdServerAddress = "localhost:2379"
+	EtcdServerAddress = "localhost:2388"
 	Prefix            = "/services/"
 	ServiceValue      = "localhost:9100"
 	ServiceKey        = Prefix + "search-service"

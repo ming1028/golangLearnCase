@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	etcdEndpoints = "localhost:2379" // etcd 服务地址
+	etcdEndpoints = "localhost:2388" // etcd 服务地址
 	serviceName   = "search-service"
 	serviceKey    = "/services/" + serviceName
 	serviceValue  = "127.0.0.1:9099"
