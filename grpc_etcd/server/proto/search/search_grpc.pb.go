@@ -4,7 +4,7 @@
 // - protoc             v5.27.2
 // source: search.proto
 
-package pb
+package search
 
 import (
 	context "context"
