@@ -7,7 +7,7 @@ import (
 	"github.com/go-kit/kit/sd/etcdv3"
 	"github.com/go-kit/kit/sd/lb"
 	etcdLog "github.com/go-kit/log"
-	"github.com/golangLearnCase/grpc_etcd/server/proto/pb"
+	"github.com/golangLearnCase/grpc_etcd/server/proto/search"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"io"
@@ -54,14 +54,14 @@ func main() {
 	}*/
 	// 方式2 定义重试次数的请求
 	reqEndpoint := lb.Retry(3, time.Second, balancer)
-	req := &pb.SearchReq{
+	req := &search.SearchReq{
 		Name: "kit etcd request:",
 	}
 	response, err := reqEndpoint(context.Background(), req)
 	if err != nil {
 		log.Fatal(err)
 	}
-	resp := response.(*pb.SearchResp)
+	resp := response.(*search.SearchResp)
 	log.Println(resp.GetRespName())
 }
 
@@ -71,9 +71,9 @@ func ReqFactory() sd.Factory {
 		if err != nil {
 			return nil, nil, err
 		}
-		client := pb.NewSearchServiceClient(conn) // 生成服务客户端
+		client := search.NewSearchServiceClient(conn) // 生成服务客户端
 		return func(ctx context.Context, request interface{}) (interface{}, error) {
-			req := request.(*pb.SearchReq)
+			req := request.(*search.SearchReq)
 			return client.Search(ctx, req)
 		}, conn, nil
 	}

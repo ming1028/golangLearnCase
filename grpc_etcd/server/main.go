@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/golangLearnCase/grpc_etcd/server/pkg/xetcd"
-	"github.com/golangLearnCase/grpc_etcd/server/proto/pb"
+	searchPb "github.com/golangLearnCase/grpc_etcd/server/proto/search"
 	"github.com/golangLearnCase/grpc_etcd/server/service/search"
 	"github.com/spf13/cast"
 	"google.golang.org/grpc"
@@ -14,7 +14,7 @@ const PORT = 9099
 
 func main() {
 	grpcServer := grpc.NewServer()
-	pb.RegisterSearchServiceServer(grpcServer, &search.SearchService{})
+	searchPb.RegisterSearchServiceServer(grpcServer, &search.SearchService{})
 
 	lis, err := net.Listen("tcp", ":"+cast.ToString(PORT))
 	if err != nil {

@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/golangLearnCase/grpc_etcd/server/proto/pb"
+	"github.com/golangLearnCase/grpc_etcd/server/proto/search"
 	clientv3 "go.etcd.io/etcd/client/v3"
 	"go.etcd.io/etcd/client/v3/naming/resolver"
 	"google.golang.org/grpc"
@@ -45,11 +45,11 @@ func main() {
 	}
 	defer conn.Close()
 
-	searchClient := pb.NewSearchServiceClient(conn)
+	searchClient := search.NewSearchServiceClient(conn)
 	ctxTimeout, cancel := context.WithTimeout(context.Background(), time.Second*10)
 	defer cancel()
 
-	resp, err := searchClient.Search(ctxTimeout, &pb.SearchReq{
+	resp, err := searchClient.Search(ctxTimeout, &search.SearchReq{
 		Name: "grpc search",
 	})
 	if err != nil {

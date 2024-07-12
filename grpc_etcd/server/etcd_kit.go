@@ -6,7 +6,7 @@ import (
 	"github.com/go-kit/kit/sd/etcdv3"
 	kitTransGrpc "github.com/go-kit/kit/transport/grpc"
 	etcdLog "github.com/go-kit/log"
-	"github.com/golangLearnCase/grpc_etcd/server/proto/pb"
+	searchPb "github.com/golangLearnCase/grpc_etcd/server/proto/search"
 	"github.com/golangLearnCase/grpc_etcd/server/service/search"
 	"google.golang.org/grpc"
 	"log"
@@ -54,7 +54,7 @@ func main() {
 		encodeResponse,
 	)
 	gs := grpc.NewServer(grpc.UnaryInterceptor(kitTransGrpc.Interceptor))
-	pb.RegisterSearchServiceServer(gs, &search.SearchService{
+	searchPb.RegisterSearchServiceServer(gs, &search.SearchService{
 		SearchEndpointHandler: searchHandler,
 	})
 	gs.Serve(listener)
