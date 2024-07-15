@@ -45,6 +45,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	// 服务监听地址、服务元数据
 	err = em.AddEndpoint(context.Background(), serviceKey+"/"+serviceValue, endpoints.Endpoint{
 		Addr: serviceValue,
 		Metadata: map[string]string{
