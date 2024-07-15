@@ -40,7 +40,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	// grpcResolver.Register(etcdResolver)
+
 	svcCfg := `
 {
     "loadBalancingConfig": [

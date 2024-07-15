@@ -20,3 +20,7 @@ protoc -I ./proto --go_out ../../ --go-grpc_out ../../ search.proto
 * server端，不同方法可能有不能的数据格式，可以针对每个方法定义自己的压缩、解压方法，方法返回值必须是endpoint.Endpoint函数类型
 * client端
 * 轮询：根据请求次数（原子性）求余获得
+
+## etcd 
+
+* 使用etcd的resolver.NewBuilder作为grpc的解析器，底层默认将target当为前缀去检索服务，并将数据json反序列化
