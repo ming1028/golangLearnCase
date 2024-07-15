@@ -34,6 +34,7 @@ func main() {
 		panic(err)
 	}
 
+	// serviceKey同一个服务的前缀
 	em, err := endpoints.NewManager(client, serviceKey)
 	if err != nil {
 		panic(err)
