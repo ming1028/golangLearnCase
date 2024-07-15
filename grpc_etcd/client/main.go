@@ -16,7 +16,7 @@ const PORT = 9099
 
 const (
 	etcdEndpoints = "localhost:2388" // etcd 服务地址
-	serviceName   = "search-service"
+	serviceName   = "search"
 	serviceKey    = "/services/" + serviceName
 	serviceValue  = "127.0.0.1:9099"
 )
@@ -32,7 +32,7 @@ func main() {
 	}
 	defer client.Close()
 
-	addrs := DiscoverService()
+	addrs := DiscoverService(client)
 	if len(addrs) == 0 {
 		panic("no discovery service")
 	}
@@ -40,16 +40,30 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	// conn, err := grpc.NewClient("etcd://"+serviceKey, grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithResolvers(etcdResolver))
+	// grpcResolver.Register(etcdResolver)
+	svcCfg := `
+{
+    "loadBalancingConfig": [
+        {
+            "round_robin": {}
+        }
+    ]
+}
+`
+	conn, err := grpc.NewClient(
+		"etcd:///"+serviceKey,
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+		grpc.WithResolvers(etcdResolver),
+		grpc.WithDefaultServiceConfig(svcCfg),
+	)
 	// conn, err := grpc.NewClient(addrs[0], grpc.WithTransportCredentials(insecure.NewCredentials()))
-	conn, err := grpc.Dial("etcd:/"+serviceKey, grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithResolvers(etcdResolver))
 	if err != nil {
 		panic(err)
 	}
 	defer conn.Close()
 
 	searchClient := search.NewSearchServiceClient(conn)
-	ctxTimeout, cancel := context.WithTimeout(context.Background(), time.Second*10)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), time.Second*5)
 	defer cancel()
 
 	resp, err := searchClient.Search(ctxTimeout, &search.SearchReq{
@@ -61,17 +75,17 @@ func main() {
 	log.Printf("resp:%s", resp.GetRespName())
 }
 
-func DiscoverService() []string {
-	cfg := clientv3.Config{
+func DiscoverService(client *clientv3.Client) []string {
+	/*cfg := clientv3.Config{
 		Endpoints:         []string{etcdEndpoints},
 		DialKeepAliveTime: 5 * time.Second,
 	}
 	client, err := clientv3.New(cfg)
 	if err != nil {
 		panic(err)
-	}
+	}*/
 
-	resp, err := client.Get(context.Background(), serviceKey)
+	resp, err := client.Get(context.Background(), serviceKey, clientv3.WithPrefix())
 	if err != nil {
 		panic(err)
 	}
