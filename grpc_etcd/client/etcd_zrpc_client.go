@@ -12,7 +12,7 @@ func main() {
 	conn := zrpc.MustNewClient(zrpc.RpcClientConf{
 		Etcd: discov.EtcdConf{ // 通过 etcd 服务发现时，只需要给 Etcd 配置即可
 			Hosts: []string{"127.0.0.1:2388"},
-			Key:   "greet.rpc",
+			Key:   "services.search",
 		},
 	})
 
