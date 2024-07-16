@@ -24,4 +24,4 @@ protoc -I ./proto --go_out ../../ --go-grpc_out ../../ search.proto
 ## etcd 
 
 * 使用etcd的resolver.NewBuilder作为grpc的解析器，底层默认将target当为前缀去检索服务，并将数据json反序列化
-* zrpc使用etcd服务发现，服务key不能使用/
+* zrpc使用etcd服务发现，服务注册不支持manager格式

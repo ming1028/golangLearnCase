@@ -15,7 +15,7 @@ import (
 const (
 	etcdEndpoints = "localhost:2388" // etcd 服务地址
 	serviceName   = "search"
-	serviceKey    = "services." + serviceName
+	serviceKey    = "/services/" + serviceName
 	serviceValue  = "127.0.0.1:9099"
 )
 
