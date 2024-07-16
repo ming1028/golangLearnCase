@@ -84,7 +84,13 @@ func DiscoverService(client *clientv3.Client) []string {
 	if err != nil {
 		panic(err)
 	}*/
-
+	memberResp, err := client.MemberList(context.Background())
+	if err != nil {
+		panic(err)
+	}
+	for _, member := range memberResp.Members {
+		fmt.Println(member.ID, member.Name, member.String(), member.ClientURLs)
+	}
 	resp, err := client.Get(context.Background(), serviceKey, clientv3.WithPrefix())
 	if err != nil {
 		panic(err)
