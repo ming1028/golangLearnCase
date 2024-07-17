@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"github.com/gin-gonic/gin"
+)
 
 type Message string
 
@@ -12,7 +15,7 @@ type Event struct {
 	Greeter Greeter // <- adding a Greeter field
 }
 
-func NewMessage() Message {
+func NewMessage(ctx *gin.Context) Message {
 	return Message("Hi there!")
 }
 
