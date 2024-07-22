@@ -11,6 +11,9 @@ var timeStr = "2006-01-02 15:04:05"
 func main() {
 	now := time.Now()
 	nowStr := now.Format("2006年01月02日 15:04:05")
+	time.Sleep(time.Second * 3)
+	end := time.Since(now)
+	fmt.Println("since:", end.Truncate(time.Second).String())
 	fmt.Println(nowStr)
 	fmt.Println(now.Format(timeStr))
 	fmt.Println(now.Format(time.Layout), now.Format(time.UnixDate))
@@ -32,8 +35,8 @@ func main() {
 
 	start := time.Now()
 	time.Sleep(5)
-	end := time.Now()
-	fmt.Println("耗时：", end.Sub(start))
+	endTest := time.Now()
+	fmt.Println("耗时：", endTest.Sub(start))
 
 	fmt.Printf("秒：Time type:%T, value:%v\n", now.Unix(), now.Unix())
 	fmt.Printf("纳秒：type:%T, value:%v\n", now.UnixNano(), now.UnixNano())
