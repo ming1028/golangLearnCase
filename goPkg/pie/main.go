@@ -50,7 +50,7 @@ func main() {
 	fmt.Println(abs)
 	// 过滤相同元素
 	sli1, sli2 := abs.Diff(pie.Ints{1, 55})
-	fmt.Println(sli1, sli2)
+	fmt.Println("diff:", sli1, sli2)
 
 	fmt.Println(abs.DropTop(3), abs.DropTop(44))
 
