@@ -36,7 +36,7 @@ func main() {
 	if len(addrs) == 0 {
 		panic("no discovery service")
 	}
-	etcdResolver, err := resolver.NewBuilder(client)
+	etcdResolver, err := resolver.NewBuilder(client) // 会监听服务变化
 	if err != nil {
 		panic(err)
 	}
@@ -91,6 +91,7 @@ func DiscoverService(client *clientv3.Client) []string {
 	for _, member := range memberResp.Members {
 		fmt.Println(member.ID, member.Name, member.String(), member.ClientURLs)
 	}
+	client.Watch(context.Background(), serviceKey)
 	resp, err := client.Get(context.Background(), serviceKey, clientv3.WithPrefix())
 	if err != nil {
 		panic(err)
