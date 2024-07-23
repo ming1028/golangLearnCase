@@ -3,8 +3,10 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/PuerkitoBio/goquery"
 	"github.com/chromedp/chromedp"
 	"log"
+	"strings"
 	"time"
 )
 
@@ -22,7 +24,7 @@ func main() {
 
 	// 运行任务
 	err := chromedp.Run(ctx,
-		chromedp.Navigate(`https://36kr.com/p/2843272694778497`),
+		chromedp.Navigate(`https://36kr.com/information/technology/`),
 		chromedp.WaitVisible(`body`, chromedp.ByQuery), // 确保页面加载完成
 		chromedp.OuterHTML(`html`, &pageContent, chromedp.ByQuery),
 	)
@@ -31,5 +33,23 @@ func main() {
 	}
 
 	// 打印页面标题
-	fmt.Println("Page Title:", pageContent)
+	reader := strings.NewReader(pageContent)
+
+	// 使用 goquery.NewDocumentFromReader 创建一个 goquery.Document
+	doc, err := goquery.NewDocumentFromReader(reader)
+	if err != nil {
+		log.Fatalf("Failed to create document: %v", err)
+	}
+	doc.Find(".kr-flow-article-item").Each(func(i int, s *goquery.Selection) {
+		thumbElement := s.Find(".scaleBig").First()
+		thumbHref, ok := thumbElement.Attr("src")
+		if ok {
+			fmt.Println(thumbHref)
+		}
+		// 查找 div.scaleBig 元素
+
+		s.Find("img.scaleBig").Each(func(j int, ss *goquery.Selection) {
+			fmt.Println("Found div with class 'scaleBig'")
+		})
+	})
 }
