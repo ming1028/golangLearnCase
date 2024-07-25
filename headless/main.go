@@ -16,7 +16,7 @@ func main() {
 	defer cancel()
 
 	// 创建一个超时上下文
-	ctx, cancel = context.WithTimeout(ctx, 15*time.Second)
+	ctx, cancel = context.WithTimeout(ctx, 30*time.Second)
 	defer cancel()
 
 	// 变量用于存储页面标题
@@ -25,7 +25,8 @@ func main() {
 	// 运行任务
 	err := chromedp.Run(ctx,
 		chromedp.Navigate(`https://36kr.com/information/technology/`),
-		chromedp.WaitVisible(`body`, chromedp.ByQuery), // 确保页面加载完成
+		chromedp.WaitVisible(`img.scaleBig`, chromedp.ByQuery), // 确保页面加载完成
+		chromedp.Sleep(20*time.Second),
 		chromedp.OuterHTML(`html`, &pageContent, chromedp.ByQuery),
 	)
 	if err != nil {
@@ -41,6 +42,8 @@ func main() {
 		log.Fatalf("Failed to create document: %v", err)
 	}
 	doc.Find(".kr-flow-article-item").Each(func(i int, s *goquery.Selection) {
+		titleElement := s.Find(".article-item-title").First()
+		fmt.Println(titleElement.Text())
 		thumbElement := s.Find(".scaleBig").First()
 		thumbHref, ok := thumbElement.Attr("src")
 		if ok {

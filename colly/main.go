@@ -42,16 +42,16 @@ func main() {
 		}
 	})
 	collector.OnHTML("script", func(e *colly.HTMLElement) {
-		// attr := e.ChildAttr("p", "href")
 		text := e.Text
 		re := regexp.MustCompile(`window.initialState=`)
 		matches := re.FindStringSubmatch(e.Text)
 		if len(matches) >= 1 {
 			initialState := strings.Replace(text, "window.initialState=", "", 1)
-			fmt.Println("window.initialState:", initialState)
-			encry, _ := jsonparser.GetString([]byte(initialState), "state")
-			bytes, _ := DePwdCode(encry)
-			fmt.Println(string(bytes))
+			initialStateStr, _, _, err := jsonparser.Get([]byte(initialState), "information", "informationList", "itemList")
+			if err != nil {
+				return
+			}
+			fmt.Println(string(initialStateStr))
 		}
 	})
 	// 接收到的内容是XML ,则在之后调用
@@ -64,7 +64,7 @@ func main() {
 		fmt.Println("Finished", r.Request.URL)
 	})
 
-	collector.Visit("https://36kr.com/p/2815034915392002")
+	collector.Visit("https://36kr.com/information/technology/")
 
 }
 
