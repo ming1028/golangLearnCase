@@ -5,10 +5,11 @@ import (
 	"encoding/base64"
 	"errors"
 	"fmt"
-	"github.com/buger/jsonparser"
+	"github.com/PuerkitoBio/goquery"
 	"github.com/gocolly/colly/v2"
-	"regexp"
+	"github.com/zeromicro/go-zero/core/logx"
 	"strings"
+	"time"
 )
 
 // todo aes ECB解密
@@ -30,11 +31,57 @@ func main() {
 		fmt.Println("response body length:", len(response.Body))
 
 	})
-	collector.OnHTML(".index_cententWrap__Jv8jK", func(e *colly.HTMLElement) {
-		// attr := e.ChildAttr("p", "href")
-		fmt.Println(e.Text)
+	collector.OnHTML(".css-9w3zhd", func(e *colly.HTMLElement) {
+		e.DOM.Find("meta").Each(func(i int, s *goquery.Selection) {
+			/*dp, ok := s.Attr("itemprop")
+			if !ok {
+				return
+			}
+			if dp != "dateModified" {
+				return
+			}
+			t, ok := s.Attr("content")
+			if !ok {
+				return
+			}
+			utcTime, err := time.Parse(time.RFC3339, t)
+			if err != nil {
+				fmt.Println("Error parsing time:", err)
+				return
+			}
+
+			// 获取本地时区
+			//localTime := utcTime.Local().Unix()
+
+			// 打印本地时间
+			fmt.Println("Local Time:", utcTime.Unix())*/
+			dp, ok := s.Attr("itemprop")
+			if !ok {
+				return
+			}
+			content, ok := s.Attr("content")
+			if !ok || content == "" {
+				return
+			}
+			switch dp {
+			case "headline":
+				fallthrough
+			case "url":
+				fmt.Println(strings.Trim(content, "//"))
+			case "dateModified":
+				return
+				utcTime, err := time.Parse(time.RFC3339, content)
+				if err != nil {
+					logx.Errorf("Error parsing time:%v", err)
+					return
+				}
+				fmt.Println(utcTime.Local().Unix())
+			default:
+				return
+			}
+		})
 	})
-	collector.OnHTML("script[src]", func(e *colly.HTMLElement) {
+	/*collector.OnHTML("script[src]", func(e *colly.HTMLElement) {
 		// attr := e.ChildAttr("p", "href")
 		jsSrc := e.Attr("src")
 		if strings.Contains(jsSrc, "app") {
@@ -53,7 +100,7 @@ func main() {
 			}
 			fmt.Println(string(initialStateStr))
 		}
-	})
+	})*/
 	// 接收到的内容是XML ,则在之后调用
 	/*collector.OnXML("//h1", func(e *colly.XMLElement) {
 		fmt.Println("OnXML", e.Text)
@@ -64,7 +111,7 @@ func main() {
 		fmt.Println("Finished", r.Request.URL)
 	})
 
-	collector.Visit("https://36kr.com/information/technology/")
+	collector.Visit("https://zhuanlan.zhihu.com/designero")
 
 }
 
