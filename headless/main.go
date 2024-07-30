@@ -16,7 +16,7 @@ func main() {
 	defer cancel()
 
 	// 创建一个超时上下文
-	ctx, cancel = context.WithTimeout(ctx, 30*time.Second)
+	ctx, cancel = context.WithTimeout(ctx, 10*time.Second)
 	defer cancel()
 
 	// 变量用于存储页面标题
@@ -24,9 +24,8 @@ func main() {
 
 	// 运行任务
 	err := chromedp.Run(ctx,
-		chromedp.Navigate(`https://36kr.com/information/technology/`),
-		chromedp.WaitVisible(`img.scaleBig`, chromedp.ByQuery), // 确保页面加载完成
-		chromedp.Sleep(20*time.Second),
+		chromedp.Navigate(`https://36kr.com/p/2884561632664196`),
+		chromedp.WaitVisible(`body`, chromedp.ByQuery), // 确保页面加载完成
 		chromedp.OuterHTML(`html`, &pageContent, chromedp.ByQuery),
 	)
 	if err != nil {
@@ -41,7 +40,20 @@ func main() {
 	if err != nil {
 		log.Fatalf("Failed to create document: %v", err)
 	}
-	doc.Find(".kr-flow-article-item").Each(func(i int, s *goquery.Selection) {
+	times := doc.Find(".item-time").First()
+	fmt.Println(times.Text())
+	articleTime := strings.Trim(strings.TrimSpace(times.Text()), "·")
+	// 定义时间格式
+	layout := "2006-01-02 15:04"
+	fmt.Println(articleTime)
+	loc, err := time.LoadLocation("Asia/Shanghai")
+	t, err := time.ParseInLocation(layout, articleTime, loc)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println(t.Unix())
+	/*doc.Find(".kr-flow-article-item").Each(func(i int, s *goquery.Selection) {
 		titleElement := s.Find(".article-item-title").First()
 		fmt.Println(titleElement.Text())
 		thumbElement := s.Find(".scaleBig").First()
@@ -54,5 +66,5 @@ func main() {
 		s.Find("img.scaleBig").Each(func(j int, ss *goquery.Selection) {
 			fmt.Println("Found div with class 'scaleBig'")
 		})
-	})
+	})*/
 }

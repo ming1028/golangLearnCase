@@ -24,7 +24,7 @@ func main() {
 
 	// 运行任务
 	err := chromedp.Run(ctx,
-		chromedp.Navigate(`https://www.huxiu.com/channel/121.html`),
+		chromedp.Navigate(`https://www.huxiu.com/article/3300911.html`),
 		chromedp.WaitVisible(`body`, chromedp.ByQuery), // 确保页面加载完成
 		chromedp.OuterHTML(`html`, &pageContent, chromedp.ByQuery),
 	)
@@ -40,7 +40,9 @@ func main() {
 	if err != nil {
 		log.Fatalf("Failed to create document: %v", err)
 	}
-	doc.Find(".article-item-wrap").Each(func(i int, s *goquery.Selection) {
+	ts := doc.Find(".article__time").First()
+	fmt.Println(ts.Text())
+	/*doc.Find(".article-item-wrap").Each(func(i int, s *goquery.Selection) {
 		titleElement := s.Find(".channel-title").First()
 		if titleElement.Nodes == nil {
 			titleElement = s.Find(".content-title").First()
@@ -64,5 +66,5 @@ func main() {
 		}
 		fmt.Println(titleElement.Text())
 		fmt.Println(pubTime.Text(), url, pic)
-	})
+	})*/
 }

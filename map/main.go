@@ -2,9 +2,19 @@ package main
 
 import (
 	"fmt"
+	"time"
 )
 
 func main() {
+	layout := "2006-01-02 15:04"
+	loc, err := time.LoadLocation("Asia/Shanghai")
+	t, err := time.ParseInLocation(layout, "2024-07-30 16:37", loc)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println(t.Unix())
+	return
 	fmt.Println(fmt.Sprintf("  %x", 455))
 	m1 := map[string]int{
 		"a": 1,
