@@ -30,9 +30,6 @@ func main() {
 	err := chromedp.Run(ctx,
 		chromedp.Navigate(`https://zhuanlan.zhihu.com/p/520275558`),
 		network.Enable(),
-		network.SetExtraHTTPHeaders(network.Headers(map[string]interface{}{
-			"Proxy-Authorization": "Basic SFA1UjE0MDVTTzZPSEFNRDowMEUyQTk3OEQyOUEwMTQ2",
-		})),
 		chromedp.WaitVisible(`.css-9w3zhd`, chromedp.ByQuery), // 确保页面加载完成
 		chromedp.OuterHTML(`html`, &pageContent, chromedp.ByQuery),
 	)

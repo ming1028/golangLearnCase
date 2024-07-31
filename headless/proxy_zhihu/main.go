@@ -30,6 +30,7 @@ func main() {
 		chromedp.Flag("proxy-bypass-list", "<-loopback>"),
 		chromedp.Flag("enable-automation", false), // 防止监测webdriver
 		chromedp.Flag("disable-blink-features", "AutomationControlled"),
+		chromedp.UserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"),
 	)
 	ctx, cancel := chromedp.NewExecAllocator(context.Background(), opts...)
 	defer cancel()
