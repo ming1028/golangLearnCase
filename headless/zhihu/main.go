@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
+	"github.com/chromedp/cdproto/cdp"
 	"github.com/chromedp/cdproto/network"
 	"github.com/chromedp/chromedp"
 	"github.com/zeromicro/go-zero/core/logx"
@@ -27,11 +28,20 @@ func main() {
 	ctx, cancel = context.WithTimeout(ctx, 30*time.Second)
 	defer cancel()
 	var pageContent string
+	cv := `001_iBWbpQrBbiIHlHWv8IDvHh6I8W/wx+MRCEOC2oUDoPUWBwj+=5Uqdx8aYGazNfqjRAEcau+YmGxkV0dp5h96mExkt7QQ1lYCg4x=8t/f5dM940o4E3=gtThgA45kcy=d`
 	err := chromedp.Run(ctx,
+		chromedp.ActionFunc(func(ctx context.Context) error {
+			expr := cdp.TimeSinceEpoch(time.Now().Add(5 * 24 * time.Hour))
+			return network.SetCookie("__zse_ck", cv).
+				WithExpires(&expr).
+				WithDomain(".zhihu.com").
+				Do(ctx)
+		}),
 		chromedp.Navigate(`https://zhuanlan.zhihu.com/p/520275558`),
 		network.Enable(),
-		chromedp.WaitVisible(`.css-9w3zhd`, chromedp.ByQuery), // 确保页面加载完成
+		chromedp.WaitVisible(`body`, chromedp.ByQuery), // 确保页面加载完成
 		chromedp.OuterHTML(`html`, &pageContent, chromedp.ByQuery),
+		network.SetExtraHTTPHeaders(network.Headers(map[string]interface{}{})),
 	)
 	if err != nil {
 		log.Fatal(err)
