@@ -1,0 +1,7 @@
+mode: set
+github.com/golangLearnCase/goTest/fib.go:3.21,4.11 1 0
+github.com/golangLearnCase/goTest/fib.go:7.2,7.28 1 0
+github.com/golangLearnCase/goTest/fib.go:4.11,6.3 1 0
+github.com/golangLearnCase/goTest/str.go:6.45,10.13 3 1
+github.com/golangLearnCase/goTest/str.go:15.2,16.8 2 1
+github.com/golangLearnCase/goTest/str.go:10.13,14.3 3 1
